@@ -2,9 +2,9 @@
   "name": "ethers-maths",
   "version": "1.0.0",
   "description": "➗ Useful ethers-based math libraries to ease the journey through off-chain fixed-point arithmetics",
-  "main": "lib/src/index.js",
+  "main": "lib/index.js",
   "files": [
-    "lib/**/*"
+    "lib/*"
   ],
   "scripts": {
     "build": "tsc",
