@@ -22,11 +22,12 @@ yarn add ethers-maths
 ## Usage
 
 ```typescript
-import { BaseMath } from "ethers-maths";
+import "ethers-maths";
 
-WadMath.mul(WadMath.WAD, 2);
-RayMath.div(1, RayMath.RAY);
-BaseMath.max(WadMath.WAD, RayMath.RAY);
+const WAD = BigNumber.pow10(18);
+
+BigNumber.from(1).wadMul(WAD); // 1
+BigNumber.from(WAD.mul(2)).rayMul(0.5e27); // WAD
 ```
 
 [build-img]: https://github.com/Rubilmax/ethers-maths/actions/workflows/release.yml/badge.svg
