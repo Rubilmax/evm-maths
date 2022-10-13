@@ -72,8 +72,7 @@
     }
   },
   "publishConfig": {
-    "access": "public",
-    "registry": "https://npm.pkg.github.com/@rubilmax"
+    "access": "public"
   },
   "lint-staged": {
     "*.ts": "eslint --cache --cache-location .eslintcache --fix"
