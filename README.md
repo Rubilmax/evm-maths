@@ -2,6 +2,7 @@
 
 [![npm package][npm-img]][npm-url]
 [![Build Status][build-img]][build-url]
+[![Test Status][test-img]][test-url]
 [![Downloads][downloads-img]][downloads-url]
 [![Issues][issues-img]][issues-url]
 [![Commitizen Friendly][commitizen-img]][commitizen-url]
@@ -32,6 +33,8 @@ BigNumber.from(WAD.mul(2)).rayMul(0.5e27); // WAD
 
 [build-img]: https://github.com/Rubilmax/ethers-maths/actions/workflows/release.yml/badge.svg
 [build-url]: https://github.com/Rubilmax/ethers-maths/actions/workflows/release.yml
+[test-img]: https://github.com/Rubilmax/ethers-maths/actions/workflows/jest.yml/badge.svg
+[test-url]: https://github.com/Rubilmax/ethers-maths/actions/workflows/jest.yml
 [downloads-img]: https://img.shields.io/npm/dt/ethers-maths
 [downloads-url]: https://www.npmtrends.com/ethers-maths
 [npm-img]: https://img.shields.io/npm/v/ethers-maths
