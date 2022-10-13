@@ -16,7 +16,7 @@ const RAY_PERCENT_RATIO = RAY.div(PERCENT);
 const HALF_RAY_PERCENT_RATIO = RAY_PERCENT_RATIO.div(2);
 
 declare module "ethers" {
-  class BigNumber {
+  interface BigNumber {
     min: (other: BigNumberish) => BigNumber;
     max: (other: BigNumberish) => BigNumber;
     sum: (others: BigNumberish[]) => BigNumber;
@@ -50,11 +50,13 @@ declare module "ethers" {
     rayToPercent: () => BigNumber;
     rayToWad: () => BigNumber;
     formatWad: () => string;
+  }
 
-    static pow10: (power: BigNumberish) => BigNumber;
-    static parsePercent: (value: string) => BigNumber;
-    static parseWad: (value: string) => BigNumber;
-    static parseRay: (value: string) => BigNumber;
+  namespace BigNumber {
+    let pow10: (power: BigNumberish) => BigNumber;
+    let parsePercent: (value: string) => BigNumber;
+    let parseWad: (value: string) => BigNumber;
+    let parseRay: (value: string) => BigNumber;
   }
 }
 
