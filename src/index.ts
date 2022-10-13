@@ -1,4 +1,5 @@
-import { BigNumber, BigNumberish, utils } from "ethers";
+import { BigNumber, BigNumberish } from "@ethersproject/bignumber";
+import { formatUnits, parseUnits } from "@ethersproject/units";
 
 import { avgUp, max, min, mulDivUp, pow10 } from "./utils";
 
@@ -15,7 +16,7 @@ const HALF_WAD_PERCENT_RATIO = WAD_PERCENT_RATIO.div(2);
 const RAY_PERCENT_RATIO = RAY.div(PERCENT);
 const HALF_RAY_PERCENT_RATIO = RAY_PERCENT_RATIO.div(2);
 
-declare module "ethers" {
+declare module "@ethersproject/bignumber" {
   interface BigNumber {
     min: (other: BigNumberish) => BigNumber;
     max: (other: BigNumberish) => BigNumber;
@@ -99,7 +100,7 @@ BigNumber.prototype.percentToRay = function () {
   return this.mul(RAY_PERCENT_RATIO);
 };
 BigNumber.prototype.formatPercent = function () {
-  return utils.formatUnits(this, 2);
+  return formatUnits(this, 2);
 };
 
 BigNumber.prototype.wadAdd = function (wad: BigNumberish) {
@@ -124,7 +125,7 @@ BigNumber.prototype.wadToRay = function () {
   return this.mul(RAY_WAD_RATIO);
 };
 BigNumber.prototype.formatWad = function () {
-  return utils.formatUnits(this, 18);
+  return formatUnits(this, 18);
 };
 
 BigNumber.prototype.rayAdd = function (ray: BigNumberish) {
@@ -149,16 +150,16 @@ BigNumber.prototype.rayToWad = function () {
   return this.add(HALF_RAY_WAD_RATIO).div(RAY_WAD_RATIO);
 };
 BigNumber.prototype.formatRay = function () {
-  return utils.formatUnits(this, 27);
+  return formatUnits(this, 27);
 };
 
 BigNumber.pow10 = pow10;
 BigNumber.parsePercent = function (value: string) {
-  return utils.parseUnits(value, 2);
+  return parseUnits(value, 2);
 };
 BigNumber.parseWad = function (value: string) {
-  return utils.parseUnits(value, 18);
+  return parseUnits(value, 18);
 };
 BigNumber.parseRay = function (value: string) {
-  return utils.parseUnits(value, 27);
+  return parseUnits(value, 27);
 };

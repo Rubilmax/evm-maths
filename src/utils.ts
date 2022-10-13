@@ -1,4 +1,4 @@
-import { BigNumber, BigNumberish } from "ethers";
+import { BigNumber, BigNumberish } from "@ethersproject/bignumber";
 
 export const pow10 = (power: BigNumberish) => BigNumber.from(10).pow(power);
 
