@@ -19,6 +19,7 @@ declare module "ethers" {
   class BigNumber {
     min: (other: BigNumberish) => BigNumber;
     max: (other: BigNumberish) => BigNumber;
+    sum: (others: BigNumberish[]) => BigNumber;
 
     compoundMul: (other: BigNumberish) => BigNumber;
     compoundDiv: (other: BigNumberish) => BigNumber;
@@ -62,6 +63,9 @@ BigNumber.prototype.min = function (other: BigNumberish) {
 };
 BigNumber.prototype.max = function (other: BigNumberish) {
   return max(this, other);
+};
+BigNumber.prototype.sum = function (others: BigNumberish[]) {
+  return others.reduce<BigNumber>((acc, val) => acc.add(val), this);
 };
 
 BigNumber.prototype.compoundMul = function (other: BigNumberish) {
