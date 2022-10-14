@@ -16,7 +16,7 @@ const HALF_WAD_PERCENT_RATIO = WAD_PERCENT_RATIO.div(2);
 const RAY_PERCENT_RATIO = RAY.div(PERCENT);
 const HALF_RAY_PERCENT_RATIO = RAY_PERCENT_RATIO.div(2);
 
-declare module "@ethersproject/bignumber" {
+declare module "@ethersproject/bignumber/lib/bignumber" {
   interface BigNumber {
     min: (other: BigNumberish) => BigNumber;
     max: (other: BigNumberish) => BigNumber;
