@@ -1,20 +1,19 @@
 import { BigNumber, BigNumberish } from "@ethersproject/bignumber";
-import { formatUnits, parseUnits } from "@ethersproject/units";
+import { formatUnits } from "@ethersproject/units";
 
-import { avgUp, max, min, mulDivUp, pow10 } from "./utils";
-
-export const PERCENT = pow10(4);
-export const WAD = pow10(18);
-export const RAY = pow10(27);
-
-const RAY_WAD_RATIO = RAY.div(WAD);
-const HALF_RAY_WAD_RATIO = RAY_WAD_RATIO.div(2);
-
-const WAD_PERCENT_RATIO = WAD.div(PERCENT);
-const HALF_WAD_PERCENT_RATIO = WAD_PERCENT_RATIO.div(2);
-
-const RAY_PERCENT_RATIO = RAY.div(PERCENT);
-const HALF_RAY_PERCENT_RATIO = RAY_PERCENT_RATIO.div(2);
+import {
+  HALF_RAY_PERCENT_RATIO,
+  HALF_RAY_WAD_RATIO,
+  HALF_WAD_PERCENT_RATIO,
+  PERCENT,
+  RAY,
+  RAY_PERCENT_RATIO,
+  RAY_WAD_RATIO,
+  WAD,
+  WAD_PERCENT_RATIO,
+  WAD_SQUARED,
+} from "./constants";
+import { avgUp, max, min, pow10, mulDivUp, parsePercent, parseRay, parseWad } from "./utils";
 
 declare module "@ethersproject/bignumber/lib/bignumber" {
   interface BigNumber {
@@ -76,10 +75,10 @@ BigNumber.prototype.sum = function (others: BigNumberish[]) {
 };
 
 BigNumber.prototype.compMul = function (other: BigNumberish) {
-  return BigNumber.from(this).mul(other).div(WAD);
+  return this.mul(other).div(WAD);
 };
 BigNumber.prototype.compDiv = function (other: BigNumberish) {
-  return WAD.mul(this).mul(WAD).div(other).div(WAD);
+  return this.mul(WAD_SQUARED).div(other).div(WAD);
 };
 
 BigNumber.prototype.percentAdd = function (pct: BigNumberish) {
@@ -108,10 +107,10 @@ BigNumber.prototype.formatPercent = function () {
 };
 
 BigNumber.prototype.wadAdd = function (wad: BigNumberish) {
-  return this.wadMul(PERCENT.add(wad));
+  return this.wadMul(WAD.add(wad));
 };
 BigNumber.prototype.wadSub = function (wad: BigNumberish) {
-  return this.wadMul(PERCENT.sub(wad));
+  return this.wadMul(WAD.sub(wad));
 };
 BigNumber.prototype.wadMul = function (other: BigNumberish) {
   return mulDivUp(this, other, WAD);
@@ -133,10 +132,10 @@ BigNumber.prototype.formatWad = function () {
 };
 
 BigNumber.prototype.rayAdd = function (ray: BigNumberish) {
-  return this.rayMul(PERCENT.add(ray));
+  return this.rayMul(RAY.add(ray));
 };
 BigNumber.prototype.raySub = function (ray: BigNumberish) {
-  return this.rayMul(PERCENT.sub(ray));
+  return this.rayMul(RAY.sub(ray));
 };
 BigNumber.prototype.rayMul = function (other: BigNumberish) {
   return mulDivUp(this, other, RAY);
@@ -162,12 +161,6 @@ BigNumber.WAD = WAD;
 BigNumber.RAY = RAY;
 
 BigNumber.pow10 = pow10;
-BigNumber.parsePercent = function (value: string) {
-  return parseUnits(value, 2);
-};
-BigNumber.parseWad = function (value: string) {
-  return parseUnits(value, 18);
-};
-BigNumber.parseRay = function (value: string) {
-  return parseUnits(value, 27);
-};
+BigNumber.parsePercent = parsePercent;
+BigNumber.parseWad = parseWad;
+BigNumber.parseRay = parseRay;

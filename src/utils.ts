@@ -1,4 +1,5 @@
 import { BigNumber, BigNumberish } from "@ethersproject/bignumber";
+import { parseUnits } from "@ethersproject/units";
 
 export const pow10 = (power: BigNumberish) => BigNumber.from(10).pow(power);
 
@@ -30,3 +31,7 @@ export const avgUp = (x: BigNumberish, y: BigNumberish, pct: BigNumberish, scale
 
   return max(0, scale.sub(pct)).mul(x).add(min(scale, pct).mul(y)).add(scale.div(2)).div(scale);
 };
+
+export const parsePercent = (value: string) => parseUnits(value, 2);
+export const parseWad = (value: string) => parseUnits(value, 18);
+export const parseRay = (value: string) => parseUnits(value, 27);
