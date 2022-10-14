@@ -22,8 +22,8 @@ declare module "@ethersproject/bignumber/lib/bignumber" {
     max: (other: BigNumberish) => BigNumber;
     sum: (others: BigNumberish[]) => BigNumber;
 
-    compoundMul: (other: BigNumberish) => BigNumber;
-    compoundDiv: (other: BigNumberish) => BigNumber;
+    compMul: (other: BigNumberish) => BigNumber;
+    compDiv: (other: BigNumberish) => BigNumber;
 
     percentAdd: (pct: BigNumberish) => BigNumber;
     percentSub: (pct: BigNumberish) => BigNumber;
@@ -75,10 +75,10 @@ BigNumber.prototype.sum = function (others: BigNumberish[]) {
   return others.reduce<BigNumber>((acc, val) => acc.add(val), this);
 };
 
-BigNumber.prototype.compoundMul = function (other: BigNumberish) {
+BigNumber.prototype.compMul = function (other: BigNumberish) {
   return BigNumber.from(this).mul(other).div(WAD);
 };
-BigNumber.prototype.compoundDiv = function (other: BigNumberish) {
+BigNumber.prototype.compDiv = function (other: BigNumberish) {
   return WAD.mul(this).mul(WAD).div(other).div(WAD);
 };
 
