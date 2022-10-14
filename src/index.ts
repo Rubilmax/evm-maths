@@ -3,9 +3,9 @@ import { formatUnits, parseUnits } from "@ethersproject/units";
 
 import { avgUp, max, min, mulDivUp, pow10 } from "./utils";
 
-const PERCENT = pow10(4);
-const WAD = pow10(18);
-const RAY = pow10(27);
+export const PERCENT = pow10(4);
+export const WAD = pow10(18);
+export const RAY = pow10(27);
 
 const RAY_WAD_RATIO = RAY.div(WAD);
 const HALF_RAY_WAD_RATIO = RAY_WAD_RATIO.div(2);
@@ -54,6 +54,10 @@ declare module "@ethersproject/bignumber/lib/bignumber" {
   }
 
   namespace BigNumber {
+    let PERCENT: BigNumber;
+    let WAD: BigNumber;
+    let RAY: BigNumber;
+
     let pow10: (power: BigNumberish) => BigNumber;
     let parsePercent: (value: string) => BigNumber;
     let parseWad: (value: string) => BigNumber;
@@ -152,6 +156,10 @@ BigNumber.prototype.rayToWad = function () {
 BigNumber.prototype.formatRay = function () {
   return formatUnits(this, 27);
 };
+
+BigNumber.PERCENT = PERCENT;
+BigNumber.WAD = WAD;
+BigNumber.RAY = RAY;
 
 BigNumber.pow10 = pow10;
 BigNumber.parsePercent = function (value: string) {
