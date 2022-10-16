@@ -20,6 +20,8 @@ declare module "@ethersproject/bignumber/lib/bignumber" {
     min: (other: BigNumberish) => BigNumber;
     max: (other: BigNumberish) => BigNumber;
     sum: (others: BigNumberish[]) => BigNumber;
+    format: (decimals?: number) => string;
+    toFloat: (decimals?: number) => number;
 
     compMul: (other: BigNumberish) => BigNumber;
     compDiv: (other: BigNumberish) => BigNumber;
@@ -32,6 +34,7 @@ declare module "@ethersproject/bignumber/lib/bignumber" {
     percentToWad: () => BigNumber;
     percentToRay: () => BigNumber;
     formatPercent: () => string;
+    toPercentFloat: () => number;
 
     wadAdd: (wad: BigNumberish) => BigNumber;
     wadSub: (wad: BigNumberish) => BigNumber;
@@ -40,7 +43,8 @@ declare module "@ethersproject/bignumber/lib/bignumber" {
     wadAvg: (other: BigNumberish, wad: BigNumberish) => BigNumber;
     wadToPercent: () => BigNumber;
     wadToRay: () => BigNumber;
-    formatRay: () => string;
+    formatWad: () => string;
+    toWadFloat: () => number;
 
     rayAdd: (ray: BigNumberish) => BigNumber;
     raySub: (ray: BigNumberish) => BigNumber;
@@ -49,7 +53,8 @@ declare module "@ethersproject/bignumber/lib/bignumber" {
     rayAvg: (other: BigNumberish, ray: BigNumberish) => BigNumber;
     rayToPercent: () => BigNumber;
     rayToWad: () => BigNumber;
-    formatWad: () => string;
+    formatRay: () => string;
+    toRayFloat: () => number;
   }
 
   namespace BigNumber {
@@ -72,6 +77,12 @@ BigNumber.prototype.max = function (other: BigNumberish) {
 };
 BigNumber.prototype.sum = function (others: BigNumberish[]) {
   return others.reduce<BigNumber>((acc, val) => acc.add(val), this);
+};
+BigNumber.prototype.format = function (decimals?: number) {
+  return formatUnits(this, decimals);
+};
+BigNumber.prototype.toFloat = function (decimals?: number) {
+  return parseFloat(this.format(decimals));
 };
 
 BigNumber.prototype.compMul = function (other: BigNumberish) {
@@ -103,7 +114,10 @@ BigNumber.prototype.percentToRay = function () {
   return this.mul(RAY_PERCENT_RATIO);
 };
 BigNumber.prototype.formatPercent = function () {
-  return formatUnits(this, 2);
+  return this.format(4);
+};
+BigNumber.prototype.toPercentFloat = function () {
+  return this.toFloat(4);
 };
 
 BigNumber.prototype.wadAdd = function (wad: BigNumberish) {
@@ -128,7 +142,10 @@ BigNumber.prototype.wadToRay = function () {
   return this.mul(RAY_WAD_RATIO);
 };
 BigNumber.prototype.formatWad = function () {
-  return formatUnits(this, 18);
+  return this.format(18);
+};
+BigNumber.prototype.toWadFloat = function () {
+  return this.toFloat(18);
 };
 
 BigNumber.prototype.rayAdd = function (ray: BigNumberish) {
@@ -153,7 +170,10 @@ BigNumber.prototype.rayToWad = function () {
   return this.add(HALF_RAY_WAD_RATIO).div(RAY_WAD_RATIO);
 };
 BigNumber.prototype.formatRay = function () {
-  return formatUnits(this, 27);
+  return this.format(27);
+};
+BigNumber.prototype.toRayFloat = function () {
+  return this.toFloat(27);
 };
 
 BigNumber.PERCENT = PERCENT;
