@@ -56,4 +56,15 @@ describe("ethers-maths", () => {
     expect(BigNumber.WAD.wadDiv(BigNumber.WAD).toString()).toEqual(WAD);
     expect(BigNumber.WAD.rayDiv(BigNumber.RAY).toString()).toEqual(WAD);
   });
+
+  it("should format with digits", async () => {
+    expect(BigNumber.RAY.format(27, 3)).toEqual("1.000");
+    expect(BigNumber.RAY.formatRay(3)).toEqual("1.000");
+
+    expect(BigNumber.WAD.format(18, 5)).toEqual("1.00000");
+    expect(BigNumber.WAD.formatWad(5)).toEqual("1.00000");
+
+    expect(BigNumber.PERCENT.format(4, 6)).toEqual("1.000000");
+    expect(BigNumber.PERCENT.formatPercent(6)).toEqual("1.000000");
+  });
 });

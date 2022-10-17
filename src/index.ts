@@ -20,7 +20,7 @@ declare module "@ethersproject/bignumber/lib/bignumber" {
     min: (other: BigNumberish) => BigNumber;
     max: (other: BigNumberish) => BigNumber;
     sum: (others: BigNumberish[]) => BigNumber;
-    format: (decimals?: number) => string;
+    format: (decimals?: number, digits?: number) => string;
     toFloat: (decimals?: number) => number;
 
     compMul: (other: BigNumberish) => BigNumber;
@@ -33,7 +33,7 @@ declare module "@ethersproject/bignumber/lib/bignumber" {
     percentAvg: (other: BigNumberish, pct: BigNumberish) => BigNumber;
     percentToWad: () => BigNumber;
     percentToRay: () => BigNumber;
-    formatPercent: () => string;
+    formatPercent: (digits?: number) => string;
     toPercentFloat: () => number;
 
     wadAdd: (wad: BigNumberish) => BigNumber;
@@ -43,7 +43,7 @@ declare module "@ethersproject/bignumber/lib/bignumber" {
     wadAvg: (other: BigNumberish, wad: BigNumberish) => BigNumber;
     wadToPercent: () => BigNumber;
     wadToRay: () => BigNumber;
-    formatWad: () => string;
+    formatWad: (digits?: number) => string;
     toWadFloat: () => number;
 
     rayAdd: (ray: BigNumberish) => BigNumber;
@@ -53,7 +53,7 @@ declare module "@ethersproject/bignumber/lib/bignumber" {
     rayAvg: (other: BigNumberish, ray: BigNumberish) => BigNumber;
     rayToPercent: () => BigNumber;
     rayToWad: () => BigNumber;
-    formatRay: () => string;
+    formatRay: (digits?: number) => string;
     toRayFloat: () => number;
   }
 
@@ -78,8 +78,18 @@ BigNumber.prototype.max = function (other: BigNumberish) {
 BigNumber.prototype.sum = function (others: BigNumberish[]) {
   return others.reduce<BigNumber>((acc, val) => acc.add(val), this);
 };
-BigNumber.prototype.format = function (decimals?: number) {
-  return formatUnits(this, decimals);
+BigNumber.prototype.format = function (decimals?: number, digits?: number) {
+  const formatted = formatUnits(this, decimals);
+
+  let dotIndex = formatted.indexOf(".");
+  if (dotIndex < 0) dotIndex = formatted.length;
+
+  decimals = formatted.length - 1 - dotIndex;
+  digits ??= decimals;
+
+  return digits < decimals
+    ? formatted.slice(0, dotIndex + decimals - digits)
+    : formatted + "0".repeat(digits - decimals);
 };
 BigNumber.prototype.toFloat = function (decimals?: number) {
   return parseFloat(this.format(decimals));
@@ -113,8 +123,8 @@ BigNumber.prototype.percentToWad = function () {
 BigNumber.prototype.percentToRay = function () {
   return this.mul(RAY_PERCENT_RATIO);
 };
-BigNumber.prototype.formatPercent = function () {
-  return this.format(4);
+BigNumber.prototype.formatPercent = function (digits?: number) {
+  return this.format(4, digits);
 };
 BigNumber.prototype.toPercentFloat = function () {
   return this.toFloat(4);
@@ -141,8 +151,8 @@ BigNumber.prototype.wadToPercent = function () {
 BigNumber.prototype.wadToRay = function () {
   return this.mul(RAY_WAD_RATIO);
 };
-BigNumber.prototype.formatWad = function () {
-  return this.format(18);
+BigNumber.prototype.formatWad = function (digits?: number) {
+  return this.format(18, digits);
 };
 BigNumber.prototype.toWadFloat = function () {
   return this.toFloat(18);
@@ -169,8 +179,8 @@ BigNumber.prototype.rayToPercent = function () {
 BigNumber.prototype.rayToWad = function () {
   return this.add(HALF_RAY_WAD_RATIO).div(RAY_WAD_RATIO);
 };
-BigNumber.prototype.formatRay = function () {
-  return this.format(27);
+BigNumber.prototype.formatRay = function (digits?: number) {
+  return this.format(27, digits);
 };
 BigNumber.prototype.toRayFloat = function () {
   return this.toFloat(27);
