@@ -88,7 +88,7 @@ BigNumber.prototype.format = function (decimals?: number, digits?: number) {
   digits ??= decimals;
 
   return digits < decimals
-    ? formatted.slice(0, dotIndex + decimals - digits)
+    ? formatted.slice(0, dotIndex + 1 + digits)
     : formatted + "0".repeat(digits - decimals);
 };
 BigNumber.prototype.toFloat = function (decimals?: number) {
