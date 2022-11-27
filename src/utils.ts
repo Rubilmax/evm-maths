@@ -3,18 +3,24 @@ import { parseUnits } from "@ethersproject/units";
 
 export const pow10 = (power: BigNumberish) => BigNumber.from(10).pow(power);
 
-export const min = (x: BigNumberish, y: BigNumberish) => {
+export const min = (x: BigNumberish, ...others: BigNumberish[]): BigNumber => {
   x = BigNumber.from(x);
-  y = BigNumber.from(y);
 
-  return x.gt(y) ? y : x;
+  if (others.length === 0) return x;
+
+  const y = BigNumber.from(others[0]);
+
+  return min(x.gt(y) ? y : x, ...others.slice(1));
 };
 
-export const max = (x: BigNumberish, y: BigNumberish) => {
+export const max = (x: BigNumberish, ...others: BigNumberish[]): BigNumber => {
   x = BigNumber.from(x);
-  y = BigNumber.from(y);
 
-  return x.gt(y) ? x : y;
+  if (others.length === 0) return x;
+
+  const y = BigNumber.from(others[0]);
+
+  return max(x.gt(y) ? x : y, ...others.slice(1));
 };
 
 export const mulDivUp = (x: BigNumberish, y: BigNumberish, scale: BigNumberish) => {

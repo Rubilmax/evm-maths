@@ -17,8 +17,8 @@ import { avgUp, max, min, pow10, mulDivUp, parsePercent, parseRay, parseWad } fr
 
 declare module "@ethersproject/bignumber/lib/bignumber" {
   interface BigNumber {
-    min: (other: BigNumberish) => BigNumber;
-    max: (other: BigNumberish) => BigNumber;
+    min: (other: BigNumberish, ...others: BigNumberish[]) => BigNumber;
+    max: (other: BigNumberish, ...others: BigNumberish[]) => BigNumber;
     sum: (others: BigNumberish[]) => BigNumber;
     format: (decimals?: number, digits?: number) => string;
     toFloat: (decimals?: number) => number;
@@ -62,6 +62,9 @@ declare module "@ethersproject/bignumber/lib/bignumber" {
     let WAD: BigNumber;
     let RAY: BigNumber;
 
+    let min: (other: BigNumberish, ...others: BigNumberish[]) => BigNumber;
+    let max: (other: BigNumberish, ...others: BigNumberish[]) => BigNumber;
+
     let pow10: (power: BigNumberish) => BigNumber;
     let parsePercent: (value: string) => BigNumber;
     let parseWad: (value: string) => BigNumber;
@@ -69,11 +72,11 @@ declare module "@ethersproject/bignumber/lib/bignumber" {
   }
 }
 
-BigNumber.prototype.min = function (other: BigNumberish) {
-  return min(this, other);
+BigNumber.prototype.min = function (y: BigNumberish, ...others: BigNumberish[]) {
+  return min(this, y, ...others);
 };
-BigNumber.prototype.max = function (other: BigNumberish) {
-  return max(this, other);
+BigNumber.prototype.max = function (y: BigNumberish, ...others: BigNumberish[]) {
+  return max(this, y, ...others);
 };
 BigNumber.prototype.sum = function (others: BigNumberish[]) {
   return others.reduce<BigNumber>((acc, val) => acc.add(val), this);
@@ -189,6 +192,9 @@ BigNumber.prototype.toRayFloat = function () {
 BigNumber.PERCENT = PERCENT;
 BigNumber.WAD = WAD;
 BigNumber.RAY = RAY;
+
+BigNumber.min = min;
+BigNumber.max = max;
 
 BigNumber.pow10 = pow10;
 BigNumber.parsePercent = parsePercent;

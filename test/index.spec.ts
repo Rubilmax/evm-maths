@@ -12,11 +12,15 @@ describe("ethers-maths", () => {
   it("should return minimum", async () => {
     expect(BigNumber.WAD.min(0).toString()).toEqual(ZERO);
     expect(BigNumber.WAD.min(BigNumber.RAY).toString()).toEqual(WAD);
+    expect(BigNumber.WAD.min(BigNumber.WAD.add(1), 0, BigNumber.RAY).toString()).toEqual("0");
+    expect(BigNumber.min(BigNumber.WAD.add(1), 0, BigNumber.RAY).toString()).toEqual("0");
   });
 
   it("should return maximum", async () => {
     expect(BigNumber.WAD.max(0).toString()).toEqual(WAD);
     expect(BigNumber.WAD.max(BigNumber.RAY).toString()).toEqual(RAY);
+    expect(BigNumber.WAD.max(BigNumber.WAD.add(1), 0, BigNumber.RAY).toString()).toEqual(RAY);
+    expect(BigNumber.max(BigNumber.WAD.add(1), 0, BigNumber.RAY).toString()).toEqual(RAY);
   });
 
   it("should average", async () => {
