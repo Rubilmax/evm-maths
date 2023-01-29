@@ -47,6 +47,7 @@ declare module "@ethersproject/bignumber/lib/bignumber" {
     percentDivUp: (other: BigNumberish) => BigNumber;
     percentDivDown: (other: BigNumberish) => BigNumber;
     percentAvg: (other: BigNumberish, pct: BigNumberish) => BigNumber;
+    percentPow: (exponent: BigNumberish) => BigNumber;
     percentToWad: () => BigNumber;
     percentToRay: () => BigNumber;
     formatPercent: (digits?: number) => string;
@@ -157,6 +158,9 @@ BigNumber.prototype.percentDivDown = function (other: BigNumberish) {
 };
 BigNumber.prototype.percentAvg = function (other: BigNumberish, pct: BigNumberish) {
   return avgUp(this, other, pct, PERCENT);
+};
+BigNumber.prototype.percentPow = function (exponent: BigNumberish) {
+  return pow(this, exponent, PERCENT);
 };
 BigNumber.prototype.percentToWad = function () {
   return this.mul(WAD_PERCENT_RATIO);

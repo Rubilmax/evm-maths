@@ -103,6 +103,8 @@ describe("ethers-maths", () => {
   });
 
   it("should raise to the power of n", async () => {
+    expect(BigNumber.PERCENT.add(BigNumber.PERCENT).percentPow(2).formatPercent(1)).toEqual("4.0");
+    expect(BigNumber.PERCENT.add(BigNumber.PERCENT).percentPow(3).formatPercent(1)).toEqual("8.0");
     expect(BigNumber.WAD.add(BigNumber.WAD).wadPow(2).formatWad(1)).toEqual("4.0");
     expect(BigNumber.WAD.add(BigNumber.WAD).wadPow(3).formatWad(1)).toEqual("8.0");
     expect(BigNumber.RAY.add(BigNumber.RAY).rayPow(2).formatRay(1)).toEqual("4.0");
