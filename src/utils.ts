@@ -23,13 +23,31 @@ export const max = (x: BigNumberish, ...others: BigNumberish[]): BigNumber => {
   return max(x.gt(y) ? x : y, ...others.slice(1));
 };
 
-export const mulDivUp = (x: BigNumberish, y: BigNumberish, scale: BigNumberish) => {
+export const mulDivHalfUp = (x: BigNumberish, y: BigNumberish, scale: BigNumberish) => {
   x = BigNumber.from(x);
   y = BigNumber.from(y);
   scale = BigNumber.from(scale);
   if (x.eq(0) || y.eq(0)) return BigNumber.from(0);
 
   return x.mul(y).add(scale.div(2)).div(scale);
+};
+
+export const mulDivDown = (x: BigNumberish, y: BigNumberish, scale: BigNumberish) => {
+  x = BigNumber.from(x);
+  y = BigNumber.from(y);
+  scale = BigNumber.from(scale);
+  if (x.eq(0) || y.eq(0)) return BigNumber.from(0);
+
+  return x.mul(y).div(scale);
+};
+
+export const mulDivUp = (x: BigNumberish, y: BigNumberish, scale: BigNumberish) => {
+  x = BigNumber.from(x);
+  y = BigNumber.from(y);
+  scale = BigNumber.from(scale);
+  if (x.eq(0) || y.eq(0)) return BigNumber.from(0);
+
+  return x.mul(y).add(scale.sub(1)).div(scale);
 };
 
 export const avgUp = (x: BigNumberish, y: BigNumberish, pct: BigNumberish, scale: BigNumberish) => {
@@ -41,3 +59,15 @@ export const avgUp = (x: BigNumberish, y: BigNumberish, pct: BigNumberish, scale
 export const parsePercent = (value: string) => parseUnits(value, 2);
 export const parseWad = (value: string) => parseUnits(value, 18);
 export const parseRay = (value: string) => parseUnits(value, 27);
+
+export const pow = (x: BigNumberish, exponent: BigNumberish, scale: BigNumber): BigNumber => {
+  exponent = BigNumber.from(exponent);
+
+  if (exponent.eq(0)) return BigNumber.from(scale);
+  if (exponent.eq(1)) return BigNumber.from(x);
+
+  const xSquared = mulDivHalfUp(x, x, scale);
+  if (exponent.mod(2).eq(0)) return pow(xSquared, exponent.div(2), scale);
+
+  return mulDivHalfUp(x, pow(xSquared, exponent.sub(1).div(2), scale), scale);
+};

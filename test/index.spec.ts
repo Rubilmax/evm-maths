@@ -54,6 +54,36 @@ describe("ethers-maths", () => {
     expect(BigNumber.WAD.rayMul(BigNumber.RAY).toString()).toEqual(WAD);
   });
 
+  it("should round half up on multiplication", async () => {
+    expect(BigNumber.PERCENT.sub(1).percentMul(BigNumber.PERCENT.sub(1)).toString()).toEqual(
+      BigNumber.PERCENT.sub(2).toString()
+    );
+    expect(BigNumber.WAD.sub(1).wadMul(BigNumber.WAD.sub(1)).toString()).toEqual(
+      BigNumber.WAD.sub(2).toString()
+    );
+    expect(BigNumber.RAY.sub(1).rayMul(BigNumber.RAY.sub(1)).toString()).toEqual(
+      BigNumber.RAY.sub(2).toString()
+    );
+  });
+
+  it("should round up on multiplication", async () => {
+    expect(BigNumber.PERCENT.sub(1).percentMulUp(BigNumber.PERCENT.sub(1)).toString()).toEqual(
+      BigNumber.PERCENT.sub(1).toString()
+    );
+    expect(BigNumber.WAD.sub(1).wadMulUp(BigNumber.WAD.sub(1)).toString()).toEqual(
+      BigNumber.WAD.sub(1).toString()
+    );
+    expect(BigNumber.RAY.sub(1).rayMulUp(BigNumber.RAY.sub(1)).toString()).toEqual(
+      BigNumber.RAY.sub(1).toString()
+    );
+  });
+
+  it("should round down on multiplication", async () => {
+    expect(BigNumber.PERCENT.sub(1).percentMulDown(1).toString()).toEqual("0");
+    expect(BigNumber.WAD.sub(1).wadMulDown(1).toString()).toEqual("0");
+    expect(BigNumber.RAY.sub(1).rayMulDown(1).toString()).toEqual("0");
+  });
+
   it("should preserve units on division", async () => {
     expect(BigNumber.WAD.percentDiv(BigNumber.PERCENT).toString()).toEqual(WAD);
     expect(BigNumber.WAD.compDiv(BigNumber.WAD).toString()).toEqual(WAD);
@@ -70,5 +100,12 @@ describe("ethers-maths", () => {
 
     expect(BigNumber.PERCENT.format(4, 6)).toEqual("1.000000");
     expect(BigNumber.PERCENT.formatPercent(6)).toEqual("1.000000");
+  });
+
+  it("should raise to the power of n", async () => {
+    expect(BigNumber.WAD.add(BigNumber.WAD).wadPow(2).formatWad(1)).toEqual("4.0");
+    expect(BigNumber.WAD.add(BigNumber.WAD).wadPow(3).formatWad(1)).toEqual("8.0");
+    expect(BigNumber.RAY.add(BigNumber.RAY).rayPow(2).formatRay(1)).toEqual("4.0");
+    expect(BigNumber.RAY.add(BigNumber.RAY).rayPow(3).formatRay(1)).toEqual("8.0");
   });
 });
