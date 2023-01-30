@@ -14,15 +14,16 @@ import {
   WAD_SQUARED,
 } from "./constants";
 import {
-  avgUp,
+  avgHalfUp,
   max,
   min,
+  sum,
   pow10,
   mulDivHalfUp,
   parsePercent,
   parseRay,
   parseWad,
-  pow,
+  powHalfUp,
   mulDivUp,
   mulDivDown,
 } from "./utils";
@@ -91,6 +92,7 @@ declare module "@ethersproject/bignumber/lib/bignumber" {
 
     let min: (other: BigNumberish, ...others: BigNumberish[]) => BigNumber;
     let max: (other: BigNumberish, ...others: BigNumberish[]) => BigNumber;
+    let sum: (others: BigNumberish[]) => BigNumber;
 
     let pow10: (power: BigNumberish) => BigNumber;
     let parsePercent: (value: string) => BigNumber;
@@ -106,7 +108,7 @@ BigNumber.prototype.max = function (y: BigNumberish, ...others: BigNumberish[]) 
   return max(this, y, ...others);
 };
 BigNumber.prototype.sum = function (others: BigNumberish[]) {
-  return others.reduce<BigNumber>((acc, val) => acc.add(val), this);
+  return sum(this, others);
 };
 BigNumber.prototype.format = function (decimals?: number, digits?: number) {
   const formatted = formatUnits(this, decimals);
@@ -157,10 +159,10 @@ BigNumber.prototype.percentDivDown = function (other: BigNumberish) {
   return mulDivDown(this, PERCENT, other);
 };
 BigNumber.prototype.percentAvg = function (other: BigNumberish, pct: BigNumberish) {
-  return avgUp(this, other, pct, PERCENT);
+  return avgHalfUp(this, other, pct, PERCENT);
 };
 BigNumber.prototype.percentPow = function (exponent: BigNumberish) {
-  return pow(this, exponent, PERCENT);
+  return powHalfUp(this, exponent, PERCENT);
 };
 BigNumber.prototype.percentToWad = function () {
   return this.mul(WAD_PERCENT_RATIO);
@@ -200,10 +202,10 @@ BigNumber.prototype.wadDivDown = function (other: BigNumberish) {
   return mulDivDown(this, WAD, other);
 };
 BigNumber.prototype.wadAvg = function (other: BigNumberish, wad: BigNumberish) {
-  return avgUp(this, other, wad, WAD);
+  return avgHalfUp(this, other, wad, WAD);
 };
 BigNumber.prototype.wadPow = function (exponent: BigNumberish) {
-  return pow(this, exponent, WAD);
+  return powHalfUp(this, exponent, WAD);
 };
 BigNumber.prototype.wadToPercent = function () {
   return this.add(HALF_WAD_PERCENT_RATIO).div(WAD_PERCENT_RATIO);
@@ -243,10 +245,10 @@ BigNumber.prototype.rayDivDown = function (other: BigNumberish) {
   return mulDivDown(this, RAY, other);
 };
 BigNumber.prototype.rayAvg = function (other: BigNumberish, ray: BigNumberish) {
-  return avgUp(this, other, ray, RAY);
+  return avgHalfUp(this, other, ray, RAY);
 };
 BigNumber.prototype.rayPow = function (exponent: BigNumberish) {
-  return pow(this, exponent, RAY);
+  return powHalfUp(this, exponent, RAY);
 };
 BigNumber.prototype.rayToPercent = function () {
   return this.add(HALF_RAY_PERCENT_RATIO).div(RAY_PERCENT_RATIO);
@@ -267,6 +269,7 @@ BigNumber.RAY = RAY;
 
 BigNumber.min = min;
 BigNumber.max = max;
+BigNumber.sum = (others: BigNumberish[]) => sum(0, others);
 
 BigNumber.pow10 = pow10;
 BigNumber.parsePercent = parsePercent;

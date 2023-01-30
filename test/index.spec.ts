@@ -84,6 +84,42 @@ describe("ethers-maths", () => {
     expect(BigNumber.RAY.sub(1).rayMulDown(1).toString()).toEqual("0");
   });
 
+  it("should round half up on division", async () => {
+    expect(BigNumber.PERCENT.percentDiv(BigNumber.PERCENT.sub(1)).toString()).toEqual(
+      BigNumber.PERCENT.add(1).toString()
+    );
+    expect(BigNumber.WAD.wadDiv(BigNumber.WAD.sub(1)).toString()).toEqual(
+      BigNumber.WAD.add(1).toString()
+    );
+    expect(BigNumber.RAY.rayDiv(BigNumber.RAY.sub(1)).toString()).toEqual(
+      BigNumber.RAY.add(1).toString()
+    );
+  });
+
+  it("should round up on division", async () => {
+    expect(BigNumber.PERCENT.percentDivUp(BigNumber.PERCENT.sub(1)).toString()).toEqual(
+      BigNumber.PERCENT.add(2).toString()
+    );
+    expect(BigNumber.WAD.wadDivUp(BigNumber.WAD.sub(1)).toString()).toEqual(
+      BigNumber.WAD.add(2).toString()
+    );
+    expect(BigNumber.RAY.rayDivUp(BigNumber.RAY.sub(1)).toString()).toEqual(
+      BigNumber.RAY.add(2).toString()
+    );
+  });
+
+  it("should round down on division", async () => {
+    expect(BigNumber.PERCENT.percentDivDown(BigNumber.PERCENT.sub(1)).toString()).toEqual(
+      BigNumber.PERCENT.add(1).toString()
+    );
+    expect(BigNumber.WAD.wadDivDown(BigNumber.WAD.sub(1)).toString()).toEqual(
+      BigNumber.WAD.add(1).toString()
+    );
+    expect(BigNumber.RAY.rayDivDown(BigNumber.RAY.sub(1)).toString()).toEqual(
+      BigNumber.RAY.add(1).toString()
+    );
+  });
+
   it("should preserve units on division", async () => {
     expect(BigNumber.WAD.percentDiv(BigNumber.PERCENT).toString()).toEqual(WAD);
     expect(BigNumber.WAD.compDiv(BigNumber.WAD).toString()).toEqual(WAD);
