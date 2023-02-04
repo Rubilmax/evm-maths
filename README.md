@@ -159,7 +159,7 @@ BigNumber.RAY;
 
 #### `PERCENT`
 
-Returns the common PERCENT unit, which is also known as 100% in basis points
+Returns the common PERCENT unit, which is also known as `100%` in basis points
 
 _Most commonly used as Aave's `PERCENTAGE_FACTOR`_
 
@@ -170,6 +170,47 @@ import { PERCENT } from "ethers-maths/constants";
 // Returns a 1 followed by 4 zeros: 10000
 PERCENT;
 BigNumber.PERCENT;
+```
+
+#### `HALF_WAD`
+
+Returns half of the common WAD unit, which is also known as `0.5 ether` in Solidity
+
+```typescript
+// only if you want to avoid BigNumber prototype pollution
+import { HALF_WAD } from "ethers-maths/constants";
+
+// Returns a 1 followed by 18 zeros: 1000000000000000000
+HALF_WAD;
+BigNumber.HALF_WAD;
+```
+
+#### `HALF_RAY`
+
+Returns half of the common RAY unit, which is also known as `0.5e9 ether` in Solidity
+
+```typescript
+// only if you want to avoid BigNumber prototype pollution
+import { HALF_RAY } from "ethers-maths/constants";
+
+// Returns a 1 followed by 27 zeros: 1000000000000000000000000000
+HALF_RAY;
+BigNumber.HALF_RAY;
+```
+
+#### `HALF_PERCENT`
+
+Returns the common PERCENT unit, which is also known as `50%` in basis points
+
+_Most commonly used as Aave's `HALF_PERCENTAGE_FACTOR`_
+
+```typescript
+// only if you want to avoid BigNumber prototype pollution
+import { HALF_PERCENT } from "ethers-maths/constants";
+
+// Returns a 1 followed by 4 zeros: 10000
+HALF_PERCENT;
+BigNumber.HALF_PERCENT;
 ```
 
 ### Wad-based utilities
@@ -196,7 +237,7 @@ Returns the result of the addition of a BigNumberish and a wad-based percentage 
 
 ```typescript
 BigNumber.WAD.wadAdd(
-  BigNumber.WAD.div(2) // 50% in wad
+  BigNumber.HALF_WAD // 50% in wad
 ); // 1.0 * (1.0 + 0.5) = 1.5 (in wad)
 ```
 
@@ -206,7 +247,7 @@ Returns the result of the subtraction of a BigNumberish and a wad-based percenta
 
 ```typescript
 BigNumber.WAD.wadSub(
-  BigNumber.WAD.div(2) // 50% in wad
+  BigNumber.HALF_WAD // 50% in wad
 ); // 1.0 * (1.0 - 0.5) = 0.5 (in wad)
 ```
 
@@ -217,7 +258,7 @@ Returns the weighted average of 2 BigNumberishs, using a wad-based weight (18 de
 ```typescript
 BigNumber.WAD.wadAvg(
   BigNumber.WAD.mul(2), // 2 WAD
-  BigNumber.WAD.div(2) // 50% in WAD
+  BigNumber.HALF_WAD // 50% in WAD
 ); // 1.0 * (1.0 - 0.5) + 2.0 * 0.5 = 1.5 (in wad)
 ```
 
@@ -320,7 +361,7 @@ Returns the result of the addition of a BigNumberish and a ray-based percentage 
 
 ```typescript
 BigNumber.RAY.rayAdd(
-  BigNumber.RAY.div(2) // 50% in ray
+  BigNumber.HALF_RAY // 50% in ray
 ); // 1.0 * (1.0 + 0.5) = 1.5 (in ray)
 ```
 
@@ -330,7 +371,7 @@ Returns the result of the subtraction of a BigNumberish and a ray-based percenta
 
 ```typescript
 BigNumber.RAY.raySub(
-  BigNumber.RAY.div(2) // 50% in ray
+  BigNumber.HALF_RAY // 50% in ray
 ); // 1.0 * (1.0 - 0.5) = 0.5 (in ray)
 ```
 
@@ -341,7 +382,7 @@ Returns the weighted average of 2 BigNumberishs, using a ray-based weight (27 de
 ```typescript
 BigNumber.RAY.rayAvg(
   BigNumber.RAY.mul(2), // 2 RAY
-  BigNumber.RAY.div(2) // 50% in RAY
+  BigNumber.HALF_RAY // 50% in RAY
 ); // 1.0 * (1.0 - 0.5) + 2.0 * 0.5 = 1.5 (in ray)
 ```
 
@@ -444,7 +485,7 @@ Returns the result of the addition of a BigNumberish and a percent-based percent
 
 ```typescript
 BigNumber.PERCENT.percentAdd(
-  BigNumber.PERCENT.div(2) // 50% in percent
+  BigNumber.HALF_PERCENT // 50% in percent
 ); // 1.0 * (1.0 + 0.5) = 1.5 (in percent)
 ```
 
@@ -454,7 +495,7 @@ Returns the result of the subtraction of a BigNumberish and a percent-based perc
 
 ```typescript
 BigNumber.PERCENT.percentSub(
-  BigNumber.PERCENT.div(2) // 50% in percent
+  BigNumber.HALF_PERCENT // 50% in percent
 ); // 1.0 * (1.0 - 0.5) = 0.5 (in percent)
 ```
 
@@ -465,7 +506,7 @@ Returns the weighted average of 2 BigNumberishs, using a percent-based weight (4
 ```typescript
 BigNumber.PERCENT.percentAvg(
   BigNumber.PERCENT.mul(2), // 2 PERCENT
-  BigNumber.PERCENT.div(2) // 50% in PERCENT
+  BigNumber.HALF_PERCENT // 50% in PERCENT
 ); // 1.0 * (1.0 - 0.5) + 2.0 * 0.5 = 1.5 (in percent)
 ```
 

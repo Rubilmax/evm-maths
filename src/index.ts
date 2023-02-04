@@ -7,6 +7,9 @@ import {
   HALF_WAD_PERCENT_RATIO,
   PERCENT,
   RAY,
+  HALF_PERCENT,
+  HALF_RAY,
+  HALF_WAD,
   RAY_PERCENT_RATIO,
   RAY_WAD_RATIO,
   WAD,
@@ -87,8 +90,11 @@ declare module "@ethersproject/bignumber/lib/bignumber" {
 
   namespace BigNumber {
     let PERCENT: BigNumber;
+    let HALF_PERCENT: BigNumber;
     let WAD: BigNumber;
+    let HALF_WAD: BigNumber;
     let RAY: BigNumber;
+    let HALF_RAY: BigNumber;
 
     let min: (other: BigNumberish, ...others: BigNumberish[]) => BigNumber;
     let max: (other: BigNumberish, ...others: BigNumberish[]) => BigNumber;
@@ -264,8 +270,11 @@ BigNumber.prototype.toRayFloat = function () {
 };
 
 BigNumber.PERCENT = PERCENT;
+BigNumber.HALF_PERCENT = HALF_PERCENT;
 BigNumber.WAD = WAD;
+BigNumber.HALF_WAD = HALF_WAD;
 BigNumber.RAY = RAY;
+BigNumber.HALF_RAY = HALF_RAY;
 
 BigNumber.min = min;
 BigNumber.max = max;
