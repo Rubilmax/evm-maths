@@ -45,6 +45,8 @@ BigNumber.from(WAD.mul(2)).rayMul(0.5e27); // WAD
 - [Ray-based utilities](#ray-based-utilities)
 - [Percent-based utilities](#percent-based-utilities)
 
+---
+
 ### Scale-agnostic utilities
 
 #### `min`
@@ -124,6 +126,8 @@ import { pow10 } from "ethers-maths/utils";
 pow10(2);
 BigNumber.pow10(2);
 ```
+
+---
 
 ### Scale constants
 
@@ -212,6 +216,8 @@ import { HALF_PERCENT } from "ethers-maths/constants";
 HALF_PERCENT;
 BigNumber.HALF_PERCENT;
 ```
+
+---
 
 ### Wad-based utilities
 
@@ -337,6 +343,8 @@ Scales the wad-based BigNumber up to the ray scale (adding 9 decimals)
 BigNumber.WAD.wadToRay(); // 1 RAY
 ```
 
+---
+
 ### Ray-based utilities
 
 #### `rayMul`
@@ -460,6 +468,8 @@ Scales the ray-based BigNumber down to the wad scale (losing 9 decimals)
 ```typescript
 BigNumber.RAY.rayToWad(); // 1 WAD
 ```
+
+---
 
 ### Percent-based utilities
 
