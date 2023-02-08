@@ -146,4 +146,13 @@ describe("ethers-maths", () => {
     expect(BigNumber.RAY.add(BigNumber.RAY).rayPow(2).formatRay(1)).toEqual("4.0");
     expect(BigNumber.RAY.add(BigNumber.RAY).rayPow(3).formatRay(1)).toEqual("8.0");
   });
+
+  it("should scale decimals", async () => {
+    expect(BigNumber.PERCENT.percentToWad().toString()).toEqual(BigNumber.WAD.toString());
+    expect(BigNumber.PERCENT.percentToRay().toString()).toEqual(BigNumber.RAY.toString());
+    expect(BigNumber.WAD.wadToPercent().toString()).toEqual(BigNumber.PERCENT.toString());
+    expect(BigNumber.WAD.wadToRay().toString()).toEqual(BigNumber.RAY.toString());
+    expect(BigNumber.RAY.rayToPercent().toString()).toEqual(BigNumber.PERCENT.toString());
+    expect(BigNumber.RAY.rayToWad().toString()).toEqual(BigNumber.WAD.toString());
+  });
 });

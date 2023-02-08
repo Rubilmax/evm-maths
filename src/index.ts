@@ -1,21 +1,7 @@
 import { BigNumber, BigNumberish } from "@ethersproject/bignumber";
 import { formatUnits } from "@ethersproject/units";
 
-import {
-  HALF_RAY_PERCENT_RATIO,
-  HALF_RAY_WAD_RATIO,
-  HALF_WAD_PERCENT_RATIO,
-  PERCENT,
-  RAY,
-  HALF_PERCENT,
-  HALF_RAY,
-  HALF_WAD,
-  RAY_PERCENT_RATIO,
-  RAY_WAD_RATIO,
-  WAD,
-  WAD_PERCENT_RATIO,
-  WAD_SQUARED,
-} from "./constants";
+import { PERCENT, RAY, HALF_PERCENT, HALF_RAY, HALF_WAD, WAD, WAD_SQUARED } from "./constants";
 import {
   avgHalfUp,
   max,
@@ -52,6 +38,7 @@ declare module "@ethersproject/bignumber/lib/bignumber" {
     percentDivDown: (other: BigNumberish) => BigNumber;
     percentAvg: (other: BigNumberish, pct: BigNumberish) => BigNumber;
     percentPow: (exponent: BigNumberish) => BigNumber;
+    percentToDecimals: (decimals: number) => BigNumber;
     percentToWad: () => BigNumber;
     percentToRay: () => BigNumber;
     formatPercent: (digits?: number) => string;
@@ -67,6 +54,7 @@ declare module "@ethersproject/bignumber/lib/bignumber" {
     wadDivDown: (other: BigNumberish) => BigNumber;
     wadAvg: (other: BigNumberish, wad: BigNumberish) => BigNumber;
     wadPow: (exponent: BigNumberish) => BigNumber;
+    wadToDecimals: (decimals: number) => BigNumber;
     wadToPercent: () => BigNumber;
     wadToRay: () => BigNumber;
     formatWad: (digits?: number) => string;
@@ -82,6 +70,7 @@ declare module "@ethersproject/bignumber/lib/bignumber" {
     rayDivDown: (other: BigNumberish) => BigNumber;
     rayAvg: (other: BigNumberish, ray: BigNumberish) => BigNumber;
     rayPow: (exponent: BigNumberish) => BigNumber;
+    rayToDecimals: (decimals: number) => BigNumber;
     rayToPercent: () => BigNumber;
     rayToWad: () => BigNumber;
     formatRay: (digits?: number) => string;
@@ -170,11 +159,20 @@ BigNumber.prototype.percentAvg = function (other: BigNumberish, pct: BigNumberis
 BigNumber.prototype.percentPow = function (exponent: BigNumberish) {
   return powHalfUp(this, exponent, PERCENT);
 };
+BigNumber.prototype.percentToDecimals = function (decimals: number) {
+  if (decimals <= 4) {
+    const ratio = pow10(4 - decimals);
+
+    return this.add(ratio.div(2)).div(ratio);
+  }
+
+  return this.mul(pow10(decimals - 4));
+};
 BigNumber.prototype.percentToWad = function () {
-  return this.mul(WAD_PERCENT_RATIO);
+  return this.percentToDecimals(18);
 };
 BigNumber.prototype.percentToRay = function () {
-  return this.mul(RAY_PERCENT_RATIO);
+  return this.percentToDecimals(27);
 };
 BigNumber.prototype.formatPercent = function (digits?: number) {
   return this.format(4, digits);
@@ -213,11 +211,20 @@ BigNumber.prototype.wadAvg = function (other: BigNumberish, wad: BigNumberish) {
 BigNumber.prototype.wadPow = function (exponent: BigNumberish) {
   return powHalfUp(this, exponent, WAD);
 };
+BigNumber.prototype.wadToDecimals = function (decimals: number) {
+  if (decimals <= 18) {
+    const ratio = pow10(18 - decimals);
+
+    return this.add(ratio.div(2)).div(ratio);
+  }
+
+  return this.mul(pow10(decimals - 18));
+};
 BigNumber.prototype.wadToPercent = function () {
-  return this.add(HALF_WAD_PERCENT_RATIO).div(WAD_PERCENT_RATIO);
+  return this.wadToDecimals(4);
 };
 BigNumber.prototype.wadToRay = function () {
-  return this.mul(RAY_WAD_RATIO);
+  return this.wadToDecimals(27);
 };
 BigNumber.prototype.formatWad = function (digits?: number) {
   return this.format(18, digits);
@@ -256,11 +263,20 @@ BigNumber.prototype.rayAvg = function (other: BigNumberish, ray: BigNumberish) {
 BigNumber.prototype.rayPow = function (exponent: BigNumberish) {
   return powHalfUp(this, exponent, RAY);
 };
+BigNumber.prototype.rayToDecimals = function (decimals: number) {
+  if (decimals <= 27) {
+    const ratio = pow10(27 - decimals);
+
+    return this.add(ratio.div(2)).div(ratio);
+  }
+
+  return this.mul(pow10(decimals - 27));
+};
 BigNumber.prototype.rayToPercent = function () {
-  return this.add(HALF_RAY_PERCENT_RATIO).div(RAY_PERCENT_RATIO);
+  return this.rayToDecimals(4);
 };
 BigNumber.prototype.rayToWad = function () {
-  return this.add(HALF_RAY_WAD_RATIO).div(RAY_WAD_RATIO);
+  return this.rayToDecimals(18);
 };
 BigNumber.prototype.formatRay = function (digits?: number) {
   return this.format(27, digits);
