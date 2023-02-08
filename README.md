@@ -343,6 +343,14 @@ Scales the wad-based BigNumber up to the ray scale (adding 9 decimals)
 BigNumber.WAD.wadToRay(); // 1 RAY
 ```
 
+#### `wadToDecimals`
+
+Scales the wad-based BigNumber up or down to the given scale defined by its number of decimals
+
+```typescript
+BigNumber.WAD.wadToDecimals(27); // 1 RAY
+```
+
 ---
 
 ### Ray-based utilities
@@ -469,6 +477,14 @@ Scales the ray-based BigNumber down to the wad scale (losing 9 decimals)
 BigNumber.RAY.rayToWad(); // 1 WAD
 ```
 
+#### `rayToDecimals`
+
+Scales the ray-based BigNumber up or down to the given scale defined by its number of decimals
+
+```typescript
+BigNumber.RAY.rayToDecimals(18); // 1 WAD
+```
+
 ---
 
 ### Percent-based utilities
@@ -593,6 +609,14 @@ Scales the percent-based BigNumber up to the ray scale (adding 23 decimals)
 
 ```typescript
 BigNumber.PERCENT.percentToRay(); // 1 RAY
+```
+
+#### `percentToDecimals`
+
+Scales the percent-based BigNumber up or down to the given scale defined by its number of decimals
+
+```typescript
+BigNumber.RAY.percentToDecimals(27); // 1 RAY
 ```
 
 [build-img]: https://github.com/Rubilmax/ethers-maths/actions/workflows/release.yml/badge.svg
