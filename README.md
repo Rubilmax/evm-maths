@@ -24,15 +24,15 @@ yarn add ethers-maths
 
 ## Usage
 
-Just import the module and you'll benefit from an augmented, and typed, `BigNumber` class!
+Just import the module and you'll benefit from an augmented, and typed, `BigInt` class!
 
 ```typescript
 import "ethers-maths";
 
-const WAD = BigNumber.pow10(18);
+const WAD = BigInt.pow10(18);
 
-BigNumber.from(1).wadMul(WAD); // 1
-BigNumber.from(WAD.mul(2)).rayMul(0.5e27); // WAD
+BigInt.from(1).wadMul(WAD); // 1
+BigInt.from(WAD.mul(2)).rayMul(0.5e27); // WAD
 ```
 
 ---
@@ -51,67 +51,67 @@ BigNumber.from(WAD.mul(2)).rayMul(0.5e27); // WAD
 
 #### `min`
 
-Returns the minimum between input BigNumberish, as a BigNumber
+Returns the minimum between input BigNumberish, as a BigInt
 
 ```typescript
-// only if you want to avoid BigNumber prototype pollution
+// only if you want to avoid BigInt prototype pollution
 import { min } from "ethers-maths/utils";
 
-// Returns the minimum between input BigNumberish, as a BigNumber: 0
+// Returns the minimum between input BigNumberish, as a BigInt: 0
 min(0, 1, "2", ...);
-BigNumber.min(0, 1, "2", ...);
-BigNumber.from(0).min(1, "2", ...);
+BigInt.min(0, 1, "2", ...);
+BigInt.from(0).min(1, "2", ...);
 ```
 
 #### `max`
 
-Returns the maximum between input BigNumberish, as a BigNumber
+Returns the maximum between input BigNumberish, as a BigInt
 
 ```typescript
-// only if you want to avoid BigNumber prototype pollution
+// only if you want to avoid BigInt prototype pollution
 import { max } from "ethers-maths/utils";
 
-// Returns the maximum between input BigNumberish, as a BigNumber: 2
+// Returns the maximum between input BigNumberish, as a BigInt: 2
 max(0, 1, "2", ...);
-BigNumber.max(0, 1, "2", ...);
-BigNumber.from(0).max(1, "2", ...);
+BigInt.max(0, 1, "2", ...);
+BigInt.from(0).max(1, "2", ...);
 ```
 
 #### `sum`
 
-Returns the sum of input BigNumberish array, as a BigNumber
+Returns the sum of input BigNumberish array, as a BigInt
 
 ```typescript
-// only if you want to avoid BigNumber prototype pollution
+// only if you want to avoid BigInt prototype pollution
 import { sum } from "ethers-maths/utils";
 
-// Returns the sum of input BigNumberish array, as a BigNumber: 3
+// Returns the sum of input BigNumberish array, as a BigInt: 3
 sum([0, 1, "2"]);
-BigNumber.sum([0, 1, "2"]);
-BigNumber.from(0).sum([1, "2"]);
+BigInt.sum([0, 1, "2"]);
+BigInt.from(0).sum([1, "2"]);
 ```
 
 #### `format`
 
-Returns a string representation of the BigNumber's value, formatted according to:
+Returns a string representation of the BigInt's value, formatted according to:
 
-- the input number of decimals the BigNumber value holds (default: 0)
+- the input number of decimals the BigInt value holds (default: 0)
 - the input number of digits expected after the unit, truncating the trailing digits if any (default: keep all digits after the decimal point)
 
 ```typescript
-// Returns a string representation of the BigNumber's value: 0.01
-BigNumber.from(19).format(3, 2);
+// Returns a string representation of the BigInt's value: 0.01
+BigInt.from(19).format(3, 2);
 ```
 
 #### `toFloat`
 
-Returns a float representation of the BigNumber's value, parsed according to the input number of decimals the BigNumber value holds (default: 0)
+Returns a float representation of the BigInt's value, parsed according to the input number of decimals the BigInt value holds (default: 0)
 
-Note: parsing a too large value may result in parsing `NaN` (because the BigNumber's value may still be too large to fit in a JS floating-point number)
+Note: parsing a too large value may result in parsing `NaN` (because the BigInt's value may still be too large to fit in a JS floating-point number)
 
 ```typescript
-// Returns a string representation of the BigNumber's value: 0.01
-BigNumber.from(19).toFloat(3, 2);
+// Returns a string representation of the BigInt's value: 0.01
+BigInt.from(19).toFloat(3, 2);
 ```
 
 #### `pow10`
@@ -119,12 +119,12 @@ BigNumber.from(19).toFloat(3, 2);
 Returns a 1 followed by the input number of zeros (10 raised to the power of the input)
 
 ```typescript
-// only if you want to avoid BigNumber prototype pollution
+// only if you want to avoid BigInt prototype pollution
 import { pow10 } from "ethers-maths/utils";
 
 // Returns a 1 followed by the input number of zeros: 100
 pow10(2);
-BigNumber.pow10(2);
+BigInt.pow10(2);
 ```
 
 ---
@@ -138,12 +138,12 @@ Returns the common WAD unit, which is also known as `ether` in Solidity
 _Most commonly used as the ERC20 token unit_
 
 ```typescript
-// only if you want to avoid BigNumber prototype pollution
+// only if you want to avoid BigInt prototype pollution
 import { WAD } from "ethers-maths/constants";
 
 // Returns a 1 followed by 18 zeros: 1000000000000000000
 WAD;
-BigNumber.WAD;
+BigInt.WAD;
 ```
 
 #### `RAY`
@@ -153,12 +153,12 @@ Returns the common RAY unit, which is also known as `1e9 ether` in Solidity
 _Most commonly used as Aave's index unit_
 
 ```typescript
-// only if you want to avoid BigNumber prototype pollution
+// only if you want to avoid BigInt prototype pollution
 import { RAY } from "ethers-maths/constants";
 
 // Returns a 1 followed by 27 zeros: 1000000000000000000000000000
 RAY;
-BigNumber.RAY;
+BigInt.RAY;
 ```
 
 #### `PERCENT`
@@ -168,12 +168,12 @@ Returns the common PERCENT unit, which is also known as `100%` in basis points
 _Most commonly used as Aave's `PERCENTAGE_FACTOR`_
 
 ```typescript
-// only if you want to avoid BigNumber prototype pollution
+// only if you want to avoid BigInt prototype pollution
 import { PERCENT } from "ethers-maths/constants";
 
 // Returns a 1 followed by 4 zeros: 10000
 PERCENT;
-BigNumber.PERCENT;
+BigInt.PERCENT;
 ```
 
 #### `HALF_WAD`
@@ -181,12 +181,12 @@ BigNumber.PERCENT;
 Returns half of the common WAD unit, which is also known as `0.5 ether` in Solidity
 
 ```typescript
-// only if you want to avoid BigNumber prototype pollution
+// only if you want to avoid BigInt prototype pollution
 import { HALF_WAD } from "ethers-maths/constants";
 
 // Returns a 1 followed by 18 zeros: 1000000000000000000
 HALF_WAD;
-BigNumber.HALF_WAD;
+BigInt.HALF_WAD;
 ```
 
 #### `HALF_RAY`
@@ -194,12 +194,12 @@ BigNumber.HALF_WAD;
 Returns half of the common RAY unit, which is also known as `0.5e9 ether` in Solidity
 
 ```typescript
-// only if you want to avoid BigNumber prototype pollution
+// only if you want to avoid BigInt prototype pollution
 import { HALF_RAY } from "ethers-maths/constants";
 
 // Returns a 1 followed by 27 zeros: 1000000000000000000000000000
 HALF_RAY;
-BigNumber.HALF_RAY;
+BigInt.HALF_RAY;
 ```
 
 #### `HALF_PERCENT`
@@ -209,12 +209,12 @@ Returns the common PERCENT unit, which is also known as `50%` in basis points
 _Most commonly used as Aave's `HALF_PERCENTAGE_FACTOR`_
 
 ```typescript
-// only if you want to avoid BigNumber prototype pollution
+// only if you want to avoid BigInt prototype pollution
 import { HALF_PERCENT } from "ethers-maths/constants";
 
 // Returns a 1 followed by 4 zeros: 10000
 HALF_PERCENT;
-BigNumber.HALF_PERCENT;
+BigInt.HALF_PERCENT;
 ```
 
 ---
@@ -226,7 +226,7 @@ BigNumber.HALF_PERCENT;
 Returns the result of the wad-based multiplication (18 decimals precision), rounded half up
 
 ```typescript
-BigNumber.WAD.wadMul(BigNumber.WAD); // 1.0 * 1.0 = 1.0 (in wad)
+BigInt.WAD.wadMul(BigInt.WAD); // 1.0 * 1.0 = 1.0 (in wad)
 ```
 
 #### `wadDiv`
@@ -234,7 +234,7 @@ BigNumber.WAD.wadMul(BigNumber.WAD); // 1.0 * 1.0 = 1.0 (in wad)
 Returns the result of the wad-based division (18 decimals precision), rounded half up
 
 ```typescript
-BigNumber.WAD.wadDiv(BigNumber.WAD); // 1.0 / 1.0 = 1.0 (in wad)
+BigInt.WAD.wadDiv(BigInt.WAD); // 1.0 / 1.0 = 1.0 (in wad)
 ```
 
 #### `wadAdd`
@@ -242,8 +242,8 @@ BigNumber.WAD.wadDiv(BigNumber.WAD); // 1.0 / 1.0 = 1.0 (in wad)
 Returns the result of the addition of a BigNumberish and a wad-based percentage of it (18 decimals), rounded half up
 
 ```typescript
-BigNumber.WAD.wadAdd(
-  BigNumber.HALF_WAD // 50% in wad
+BigInt.WAD.wadAdd(
+  BigInt.HALF_WAD // 50% in wad
 ); // 1.0 * (1.0 + 0.5) = 1.5 (in wad)
 ```
 
@@ -252,8 +252,8 @@ BigNumber.WAD.wadAdd(
 Returns the result of the subtraction of a BigNumberish and a wad-based percentage of it (18 decimals), rounded half up
 
 ```typescript
-BigNumber.WAD.wadSub(
-  BigNumber.HALF_WAD // 50% in wad
+BigInt.WAD.wadSub(
+  BigInt.HALF_WAD // 50% in wad
 ); // 1.0 * (1.0 - 0.5) = 0.5 (in wad)
 ```
 
@@ -262,18 +262,18 @@ BigNumber.WAD.wadSub(
 Returns the weighted average of 2 BigNumberishs, using a wad-based weight (18 decimals), rounded half up
 
 ```typescript
-BigNumber.WAD.wadAvg(
-  BigNumber.WAD.mul(2), // 2 WAD
-  BigNumber.HALF_WAD // 50% in WAD
+BigInt.WAD.wadAvg(
+  BigInt.WAD.mul(2), // 2 WAD
+  BigInt.HALF_WAD // 50% in WAD
 ); // 1.0 * (1.0 - 0.5) + 2.0 * 0.5 = 1.5 (in wad)
 ```
 
 #### `wadPow`
 
-Returns the integer power of a BigNumber, calculated using wad-based multiplications (18 decimals precision), rounded half up
+Returns the integer power of a BigInt, calculated using wad-based multiplications (18 decimals precision), rounded half up
 
 ```typescript
-BigNumber.WAD.mul(2) // 2 WAD
+BigInt.WAD.mul(2) // 2 WAD
   .wadPow(2); // 2.0 ** 2 = 4.0 (in wad)
 ```
 
@@ -282,7 +282,7 @@ BigNumber.WAD.mul(2) // 2 WAD
 Returns the result of the wad-based multiplication (18 decimals precision), rounded up
 
 ```typescript
-BigNumber.WAD.sub(1).wadMulUp(BigNumber.WAD.sub(1)); // 0.999999999999999999 * 0.999999999999999999 = 0.999999999999999999 (in wad, rounded up)
+BigInt.WAD.sub(1).wadMulUp(BigInt.WAD.sub(1)); // 0.999999999999999999 * 0.999999999999999999 = 0.999999999999999999 (in wad, rounded up)
 ```
 
 #### `wadMulDown`
@@ -290,7 +290,7 @@ BigNumber.WAD.sub(1).wadMulUp(BigNumber.WAD.sub(1)); // 0.999999999999999999 * 0
 Returns the result of the wad-based multiplication (18 decimals precision), rounded down
 
 ```typescript
-BigNumber.WAD.sub(1).wadMulDown(BigNumber.WAD.sub(1)); // 0.999999999999999999 * 0.999999999999999999 = 0.999999999999999998 (in wad, rounded down)
+BigInt.WAD.sub(1).wadMulDown(BigInt.WAD.sub(1)); // 0.999999999999999999 * 0.999999999999999999 = 0.999999999999999998 (in wad, rounded down)
 ```
 
 #### `wadDivUp`
@@ -298,7 +298,7 @@ BigNumber.WAD.sub(1).wadMulDown(BigNumber.WAD.sub(1)); // 0.999999999999999999 *
 Returns the result of the wad-based division (18 decimals precision), rounded up
 
 ```typescript
-BigNumber.WAD.wadDivUp(BigNumber.WAD.sub(1)); // 1.0 * 0.999999999999999999 = 1.000000000000000002 (in wad, rounded up)
+BigInt.WAD.wadDivUp(BigInt.WAD.sub(1)); // 1.0 * 0.999999999999999999 = 1.000000000000000002 (in wad, rounded up)
 ```
 
 #### `wadDivDown`
@@ -306,49 +306,49 @@ BigNumber.WAD.wadDivUp(BigNumber.WAD.sub(1)); // 1.0 * 0.999999999999999999 = 1.
 Returns the result of the wad-based division (18 decimals precision), rounded down
 
 ```typescript
-BigNumber.WAD.wadDivDown(BigNumber.WAD.sub(1)); // 1.0 * 0.999999999999999999 = 1.000000000000000001 (in wad, rounded down)
+BigInt.WAD.wadDivDown(BigInt.WAD.sub(1)); // 1.0 * 0.999999999999999999 = 1.000000000000000001 (in wad, rounded down)
 ```
 
 #### `formatWad`
 
-Returns a string representation of the BigNumber's value, formatted to 18 decimals and with the input number of digits expected after the unit, truncating the trailing digits if any (default: keep all digits after the decimal point)
+Returns a string representation of the BigInt's value, formatted to 18 decimals and with the input number of digits expected after the unit, truncating the trailing digits if any (default: keep all digits after the decimal point)
 
 ```typescript
-BigNumber.WAD.formatWad(3); // 1.000
+BigInt.WAD.formatWad(3); // 1.000
 ```
 
 #### `toWadFloat`
 
-Returns a float representation of the BigNumber's value, parsed as a wad-based number.
+Returns a float representation of the BigInt's value, parsed as a wad-based number.
 
-Note: parsing a too large value may result in parsing `NaN` (because the BigNumber's value may still be too large to fit in a JS floating-point number)
+Note: parsing a too large value may result in parsing `NaN` (because the BigInt's value may still be too large to fit in a JS floating-point number)
 
 ```typescript
-BigNumber.WAD.toWadFloat(); // 1.0
+BigInt.WAD.toWadFloat(); // 1.0
 ```
 
 #### `wadToPercent`
 
-Scales the wad-based BigNumber down to the percent scale (losing 14 decimals)
+Scales the wad-based BigInt down to the percent scale (losing 14 decimals)
 
 ```typescript
-BigNumber.WAD.wadToPercent(); // 1 PERCENT
+BigInt.WAD.wadToPercent(); // 1 PERCENT
 ```
 
 #### `wadToRay`
 
-Scales the wad-based BigNumber up to the ray scale (adding 9 decimals)
+Scales the wad-based BigInt up to the ray scale (adding 9 decimals)
 
 ```typescript
-BigNumber.WAD.wadToRay(); // 1 RAY
+BigInt.WAD.wadToRay(); // 1 RAY
 ```
 
 #### `wadToDecimals`
 
-Scales the wad-based BigNumber up or down to the given scale defined by its number of decimals
+Scales the wad-based BigInt up or down to the given scale defined by its number of decimals
 
 ```typescript
-BigNumber.WAD.wadToDecimals(27); // 1 RAY
+BigInt.WAD.wadToDecimals(27); // 1 RAY
 ```
 
 ---
@@ -360,7 +360,7 @@ BigNumber.WAD.wadToDecimals(27); // 1 RAY
 Returns the result of the ray-based multiplication (27 decimals precision), rounded half up
 
 ```typescript
-BigNumber.RAY.rayMul(BigNumber.RAY); // 1.0 * 1.0 = 1.0 (in ray)
+BigInt.RAY.rayMul(BigInt.RAY); // 1.0 * 1.0 = 1.0 (in ray)
 ```
 
 #### `rayDiv`
@@ -368,7 +368,7 @@ BigNumber.RAY.rayMul(BigNumber.RAY); // 1.0 * 1.0 = 1.0 (in ray)
 Returns the result of the ray-based division (27 decimals precision), rounded half up
 
 ```typescript
-BigNumber.RAY.rayDiv(BigNumber.RAY); // 1.0 / 1.0 = 1.0 (in ray)
+BigInt.RAY.rayDiv(BigInt.RAY); // 1.0 / 1.0 = 1.0 (in ray)
 ```
 
 #### `rayAdd`
@@ -376,8 +376,8 @@ BigNumber.RAY.rayDiv(BigNumber.RAY); // 1.0 / 1.0 = 1.0 (in ray)
 Returns the result of the addition of a BigNumberish and a ray-based percentage of it (27 decimals), rounded half up
 
 ```typescript
-BigNumber.RAY.rayAdd(
-  BigNumber.HALF_RAY // 50% in ray
+BigInt.RAY.rayAdd(
+  BigInt.HALF_RAY // 50% in ray
 ); // 1.0 * (1.0 + 0.5) = 1.5 (in ray)
 ```
 
@@ -386,8 +386,8 @@ BigNumber.RAY.rayAdd(
 Returns the result of the subtraction of a BigNumberish and a ray-based percentage of it (27 decimals), rounded half up
 
 ```typescript
-BigNumber.RAY.raySub(
-  BigNumber.HALF_RAY // 50% in ray
+BigInt.RAY.raySub(
+  BigInt.HALF_RAY // 50% in ray
 ); // 1.0 * (1.0 - 0.5) = 0.5 (in ray)
 ```
 
@@ -396,18 +396,18 @@ BigNumber.RAY.raySub(
 Returns the weighted average of 2 BigNumberishs, using a ray-based weight (27 decimals), rounded half up
 
 ```typescript
-BigNumber.RAY.rayAvg(
-  BigNumber.RAY.mul(2), // 2 RAY
-  BigNumber.HALF_RAY // 50% in RAY
+BigInt.RAY.rayAvg(
+  BigInt.RAY.mul(2), // 2 RAY
+  BigInt.HALF_RAY // 50% in RAY
 ); // 1.0 * (1.0 - 0.5) + 2.0 * 0.5 = 1.5 (in ray)
 ```
 
 #### `rayPow`
 
-Returns the integer power of a BigNumber, calculated using ray-based multiplications (27 decimals precision), rounded half up
+Returns the integer power of a BigInt, calculated using ray-based multiplications (27 decimals precision), rounded half up
 
 ```typescript
-BigNumber.RAY.mul(2) // 2 RAY
+BigInt.RAY.mul(2) // 2 RAY
   .rayPow(2); // 2.0 ** 2 = 4.0 (in ray)
 ```
 
@@ -416,7 +416,7 @@ BigNumber.RAY.mul(2) // 2 RAY
 Returns the result of the ray-based multiplication (27 decimals precision), rounded up
 
 ```typescript
-BigNumber.RAY.sub(1).rayMulUp(BigNumber.RAY.sub(1)); // 0.999999999999999999999999999 * 0.999999999999999999999999999 = 0.999999999999999999999999999 (in ray, rounded up)
+BigInt.RAY.sub(1).rayMulUp(BigInt.RAY.sub(1)); // 0.999999999999999999999999999 * 0.999999999999999999999999999 = 0.999999999999999999999999999 (in ray, rounded up)
 ```
 
 #### `rayMulDown`
@@ -424,7 +424,7 @@ BigNumber.RAY.sub(1).rayMulUp(BigNumber.RAY.sub(1)); // 0.9999999999999999999999
 Returns the result of the ray-based multiplication (27 decimals precision), rounded down
 
 ```typescript
-BigNumber.RAY.sub(1).rayMulDown(BigNumber.RAY.sub(1)); // 0.999999999999999999999999999 * 0.999999999999999999999999999 = 0.999999999999999999999999998 (in ray, rounded down)
+BigInt.RAY.sub(1).rayMulDown(BigInt.RAY.sub(1)); // 0.999999999999999999999999999 * 0.999999999999999999999999999 = 0.999999999999999999999999998 (in ray, rounded down)
 ```
 
 #### `rayDivUp`
@@ -432,7 +432,7 @@ BigNumber.RAY.sub(1).rayMulDown(BigNumber.RAY.sub(1)); // 0.99999999999999999999
 Returns the result of the ray-based division (27 decimals precision), rounded up
 
 ```typescript
-BigNumber.RAY.rayDivUp(BigNumber.RAY.sub(1)); // 1.0 * 0.999999999999999999999999999 = 1.000000000000000000000000002 (in ray, rounded up)
+BigInt.RAY.rayDivUp(BigInt.RAY.sub(1)); // 1.0 * 0.999999999999999999999999999 = 1.000000000000000000000000002 (in ray, rounded up)
 ```
 
 #### `rayDivDown`
@@ -440,49 +440,49 @@ BigNumber.RAY.rayDivUp(BigNumber.RAY.sub(1)); // 1.0 * 0.99999999999999999999999
 Returns the result of the ray-based division (27 decimals precision), rounded down
 
 ```typescript
-BigNumber.RAY.rayDivDown(BigNumber.RAY.sub(1)); // 1.0 * 0.999999999999999999999999999 = 1.000000000000000000000000001 (in ray, rounded down)
+BigInt.RAY.rayDivDown(BigInt.RAY.sub(1)); // 1.0 * 0.999999999999999999999999999 = 1.000000000000000000000000001 (in ray, rounded down)
 ```
 
 #### `formatRay`
 
-Returns a string representation of the BigNumber's value, formatted to 27 decimals and with the input number of digits expected after the unit, truncating the trailing digits if any (default: keep all digits after the decimal point)
+Returns a string representation of the BigInt's value, formatted to 27 decimals and with the input number of digits expected after the unit, truncating the trailing digits if any (default: keep all digits after the decimal point)
 
 ```typescript
-BigNumber.RAY.formatRay(3); // 1.000
+BigInt.RAY.formatRay(3); // 1.000
 ```
 
 #### `toRayFloat`
 
-Returns a float representation of the BigNumber's value, parsed as a ray-based number.
+Returns a float representation of the BigInt's value, parsed as a ray-based number.
 
-Note: parsing a too large value may result in parsing `NaN` (because the BigNumber's value may still be too large to fit in a JS floating-point number)
+Note: parsing a too large value may result in parsing `NaN` (because the BigInt's value may still be too large to fit in a JS floating-point number)
 
 ```typescript
-BigNumber.RAY.toRayFloat(); // 1.0
+BigInt.RAY.toRayFloat(); // 1.0
 ```
 
 #### `rayToPercent`
 
-Scales the ray-based BigNumber down to the percent scale (losing 23 decimals)
+Scales the ray-based BigInt down to the percent scale (losing 23 decimals)
 
 ```typescript
-BigNumber.RAY.rayToPercent(); // 1 PERCENT
+BigInt.RAY.rayToPercent(); // 1 PERCENT
 ```
 
 #### `rayToWad`
 
-Scales the ray-based BigNumber down to the wad scale (losing 9 decimals)
+Scales the ray-based BigInt down to the wad scale (losing 9 decimals)
 
 ```typescript
-BigNumber.RAY.rayToWad(); // 1 WAD
+BigInt.RAY.rayToWad(); // 1 WAD
 ```
 
 #### `rayToDecimals`
 
-Scales the ray-based BigNumber up or down to the given scale defined by its number of decimals
+Scales the ray-based BigInt up or down to the given scale defined by its number of decimals
 
 ```typescript
-BigNumber.RAY.rayToDecimals(18); // 1 WAD
+BigInt.RAY.rayToDecimals(18); // 1 WAD
 ```
 
 ---
@@ -494,7 +494,7 @@ BigNumber.RAY.rayToDecimals(18); // 1 WAD
 Returns the result of the percent-based multiplication (4 decimals precision), rounded half up
 
 ```typescript
-BigNumber.PERCENT.percentMul(BigNumber.PERCENT); // 1.0 * 1.0 = 1.0 (in percent)
+BigInt.PERCENT.percentMul(BigInt.PERCENT); // 1.0 * 1.0 = 1.0 (in percent)
 ```
 
 #### `percentDiv`
@@ -502,7 +502,7 @@ BigNumber.PERCENT.percentMul(BigNumber.PERCENT); // 1.0 * 1.0 = 1.0 (in percent)
 Returns the result of the percent-based division (4 decimals precision), rounded half up
 
 ```typescript
-BigNumber.PERCENT.percentDiv(BigNumber.PERCENT); // 1.0 / 1.0 = 1.0 (in percent)
+BigInt.PERCENT.percentDiv(BigInt.PERCENT); // 1.0 / 1.0 = 1.0 (in percent)
 ```
 
 #### `percentAdd`
@@ -510,8 +510,8 @@ BigNumber.PERCENT.percentDiv(BigNumber.PERCENT); // 1.0 / 1.0 = 1.0 (in percent)
 Returns the result of the addition of a BigNumberish and a percent-based percentage of it (4 decimals), rounded half up
 
 ```typescript
-BigNumber.PERCENT.percentAdd(
-  BigNumber.HALF_PERCENT // 50% in percent
+BigInt.PERCENT.percentAdd(
+  BigInt.HALF_PERCENT // 50% in percent
 ); // 1.0 * (1.0 + 0.5) = 1.5 (in percent)
 ```
 
@@ -520,8 +520,8 @@ BigNumber.PERCENT.percentAdd(
 Returns the result of the subtraction of a BigNumberish and a percent-based percentage of it (4 decimals), rounded half up
 
 ```typescript
-BigNumber.PERCENT.percentSub(
-  BigNumber.HALF_PERCENT // 50% in percent
+BigInt.PERCENT.percentSub(
+  BigInt.HALF_PERCENT // 50% in percent
 ); // 1.0 * (1.0 - 0.5) = 0.5 (in percent)
 ```
 
@@ -530,18 +530,18 @@ BigNumber.PERCENT.percentSub(
 Returns the weighted average of 2 BigNumberishs, using a percent-based weight (4 decimals), rounded half up
 
 ```typescript
-BigNumber.PERCENT.percentAvg(
-  BigNumber.PERCENT.mul(2), // 2 PERCENT
-  BigNumber.HALF_PERCENT // 50% in PERCENT
+BigInt.PERCENT.percentAvg(
+  BigInt.PERCENT.mul(2), // 2 PERCENT
+  BigInt.HALF_PERCENT // 50% in PERCENT
 ); // 1.0 * (1.0 - 0.5) + 2.0 * 0.5 = 1.5 (in percent)
 ```
 
 #### `percentPow`
 
-Returns the integer power of a BigNumber, calculated using percent-based multiplications (4 decimals precision), rounded half up
+Returns the integer power of a BigInt, calculated using percent-based multiplications (4 decimals precision), rounded half up
 
 ```typescript
-BigNumber.PERCENT.mul(2) // 2 PERCENT
+BigInt.PERCENT.mul(2) // 2 PERCENT
   .percentPow(2); // 2.0 ** 2 = 4.0 (in percent)
 ```
 
@@ -550,7 +550,7 @@ BigNumber.PERCENT.mul(2) // 2 PERCENT
 Returns the result of the percent-based multiplication (4 decimals precision), rounded up
 
 ```typescript
-BigNumber.PERCENT.sub(1).percentMulUp(BigNumber.PERCENT.sub(1)); // 0.9999 * 0.9999 = 0.9999 (in percent, rounded up)
+BigInt.PERCENT.sub(1).percentMulUp(BigInt.PERCENT.sub(1)); // 0.9999 * 0.9999 = 0.9999 (in percent, rounded up)
 ```
 
 #### `percentMulDown`
@@ -558,7 +558,7 @@ BigNumber.PERCENT.sub(1).percentMulUp(BigNumber.PERCENT.sub(1)); // 0.9999 * 0.9
 Returns the result of the percent-based multiplication (4 decimals precision), rounded down
 
 ```typescript
-BigNumber.PERCENT.sub(1).percentMulDown(BigNumber.PERCENT.sub(1)); // 0.9999 * 0.9999 = 0.9998 (in percent, rounded down)
+BigInt.PERCENT.sub(1).percentMulDown(BigInt.PERCENT.sub(1)); // 0.9999 * 0.9999 = 0.9998 (in percent, rounded down)
 ```
 
 #### `percentDivUp`
@@ -566,7 +566,7 @@ BigNumber.PERCENT.sub(1).percentMulDown(BigNumber.PERCENT.sub(1)); // 0.9999 * 0
 Returns the result of the percent-based division (4 decimals precision), rounded up
 
 ```typescript
-BigNumber.PERCENT.percentDivUp(BigNumber.PERCENT.sub(1)); // 1.0 * 0.9999 = 1.0002 (in percent, rounded up)
+BigInt.PERCENT.percentDivUp(BigInt.PERCENT.sub(1)); // 1.0 * 0.9999 = 1.0002 (in percent, rounded up)
 ```
 
 #### `percentDivDown`
@@ -574,49 +574,49 @@ BigNumber.PERCENT.percentDivUp(BigNumber.PERCENT.sub(1)); // 1.0 * 0.9999 = 1.00
 Returns the result of the percent-based division (4 decimals precision), rounded down
 
 ```typescript
-BigNumber.PERCENT.percentDivDown(BigNumber.PERCENT.sub(1)); // 1.0 * 0.9999 = 1.0001 (in percent, rounded down)
+BigInt.PERCENT.percentDivDown(BigInt.PERCENT.sub(1)); // 1.0 * 0.9999 = 1.0001 (in percent, rounded down)
 ```
 
 #### `formatPercent`
 
-Returns a string representation of the BigNumber's value, formatted to 4 decimals and with the input number of digits expected after the unit, truncating the trailing digits if any (default: keep all digits after the decimal point)
+Returns a string representation of the BigInt's value, formatted to 4 decimals and with the input number of digits expected after the unit, truncating the trailing digits if any (default: keep all digits after the decimal point)
 
 ```typescript
-BigNumber.PERCENT.formatPercent(3); // 1.000
+BigInt.PERCENT.formatPercent(3); // 1.000
 ```
 
 #### `toPercentFloat`
 
-Returns a float representation of the BigNumber's value, parsed as a percent-based number.
+Returns a float representation of the BigInt's value, parsed as a percent-based number.
 
-Note: parsing a too large value may result in parsing `NaN` (because the BigNumber's value may still be too large to fit in a JS floating-point number)
+Note: parsing a too large value may result in parsing `NaN` (because the BigInt's value may still be too large to fit in a JS floating-point number)
 
 ```typescript
-BigNumber.PERCENT.toPercentFloat(); // 1.0
+BigInt.PERCENT.toPercentFloat(); // 1.0
 ```
 
 #### `percentToWad`
 
-Scales the percent-based BigNumber up to the wad scale (adding 14 decimals)
+Scales the percent-based BigInt up to the wad scale (adding 14 decimals)
 
 ```typescript
-BigNumber.PERCENT.percentToWad(); // 1 WAD
+BigInt.PERCENT.percentToWad(); // 1 WAD
 ```
 
 #### `percentToRay`
 
-Scales the percent-based BigNumber up to the ray scale (adding 23 decimals)
+Scales the percent-based BigInt up to the ray scale (adding 23 decimals)
 
 ```typescript
-BigNumber.PERCENT.percentToRay(); // 1 RAY
+BigInt.PERCENT.percentToRay(); // 1 RAY
 ```
 
 #### `percentToDecimals`
 
-Scales the percent-based BigNumber up or down to the given scale defined by its number of decimals
+Scales the percent-based BigInt up or down to the given scale defined by its number of decimals
 
 ```typescript
-BigNumber.RAY.percentToDecimals(27); // 1 RAY
+BigInt.RAY.percentToDecimals(27); // 1 RAY
 ```
 
 [build-img]: https://github.com/Rubilmax/ethers-maths/actions/workflows/release.yml/badge.svg
