@@ -42,9 +42,10 @@
   },
   "homepage": "https://github.com/Rubilmax/ethers-maths#readme",
   "dependencies": {
-    "ethers": "^5.0.0"
+    "ethers": "^6.0.5"
   },
   "devDependencies": {
+    "@jest/globals": "^29.4.3",
     "@trivago/prettier-plugin-sort-imports": "4.0.0",
     "@types/jest": "^27.5.2",
     "@typescript-eslint/eslint-plugin": "^5.53.0",
@@ -64,7 +65,7 @@
     "typescript": "^4.9.5"
   },
   "peerDependencies": {
-    "ethers": "^5.0.0"
+    "ethers": "^6.0.0"
   },
   "config": {
     "commitizen": {
@@ -133,11 +134,14 @@
       "<rootDir>/src/**/*.ts",
       "!<rootDir>/src/types/**/*.ts"
     ],
-    "globals": {
-      "ts-jest": {
-        "diagnostics": false,
-        "isolatedModules": true
-      }
+    "transform": {
+      "\\.tsx?$": [
+        "ts-jest",
+        {
+          "diagnostics": false,
+          "isolatedModules": true
+        }
+      ]
     }
   }
 }

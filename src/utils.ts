@@ -1,56 +1,56 @@
-import { BigNumber, BigNumberish, utils } from "ethers";
+import { BigNumberish, parseUnits, toBigInt } from "ethers";
 
-export const pow10 = (power: BigNumberish) => BigNumber.from(10).pow(power);
+export const pow10 = (power: BigNumberish) => toBigInt(10) ** toBigInt(power);
 
-export const min = (x: BigNumberish, ...others: BigNumberish[]): BigNumber => {
-  x = BigNumber.from(x);
+export const min = (x: BigNumberish, ...others: BigNumberish[]): bigint => {
+  x = toBigInt(x);
 
   if (others.length === 0) return x;
 
-  const y = BigNumber.from(others[0]);
+  const y = toBigInt(others[0]);
 
-  return min(x.gt(y) ? y : x, ...others.slice(1));
+  return min(x > y ? y : x, ...others.slice(1));
 };
 
-export const max = (x: BigNumberish, ...others: BigNumberish[]): BigNumber => {
-  x = BigNumber.from(x);
+export const max = (x: BigNumberish, ...others: BigNumberish[]): bigint => {
+  x = toBigInt(x);
 
   if (others.length === 0) return x;
 
-  const y = BigNumber.from(others[0]);
+  const y = toBigInt(others[0]);
 
-  return max(x.gt(y) ? x : y, ...others.slice(1));
+  return max(x > y ? x : y, ...others.slice(1));
 };
 
 export const sum = (initialValue: BigNumberish, others: BigNumberish[]) => {
-  return others.reduce<BigNumber>((acc, val) => acc.add(val), BigNumber.from(initialValue));
+  return others.reduce<bigint>((acc, val) => acc + toBigInt(val), toBigInt(initialValue));
 };
 
 export const mulDivHalfUp = (x: BigNumberish, y: BigNumberish, scale: BigNumberish) => {
-  x = BigNumber.from(x);
-  y = BigNumber.from(y);
-  scale = BigNumber.from(scale);
-  if (x.eq(0) || y.eq(0)) return BigNumber.from(0);
+  x = toBigInt(x);
+  y = toBigInt(y);
+  scale = toBigInt(scale);
+  if (x === 0n || y === 0n) return toBigInt(0);
 
-  return x.mul(y).add(scale.div(2)).div(scale);
+  return (x * y + scale / 2n) / scale;
 };
 
 export const mulDivDown = (x: BigNumberish, y: BigNumberish, scale: BigNumberish) => {
-  x = BigNumber.from(x);
-  y = BigNumber.from(y);
-  scale = BigNumber.from(scale);
-  if (x.eq(0) || y.eq(0)) return BigNumber.from(0);
+  x = toBigInt(x);
+  y = toBigInt(y);
+  scale = toBigInt(scale);
+  if (x === 0n || y === 0n) return toBigInt(0);
 
-  return x.mul(y).div(scale);
+  return (x * y) / scale;
 };
 
 export const mulDivUp = (x: BigNumberish, y: BigNumberish, scale: BigNumberish) => {
-  x = BigNumber.from(x);
-  y = BigNumber.from(y);
-  scale = BigNumber.from(scale);
-  if (x.eq(0) || y.eq(0)) return BigNumber.from(0);
+  x = toBigInt(x);
+  y = toBigInt(y);
+  scale = toBigInt(scale);
+  if (x === 0n || y === 0n) return toBigInt(0);
 
-  return x.mul(y).add(scale.sub(1)).div(scale);
+  return (x * y + scale - 1n) / scale;
 };
 
 export const avgHalfUp = (
@@ -59,23 +59,26 @@ export const avgHalfUp = (
   pct: BigNumberish,
   scale: BigNumberish
 ) => {
-  scale = BigNumber.from(scale);
+  x = toBigInt(x);
+  y = toBigInt(y);
+  pct = toBigInt(pct);
+  scale = toBigInt(scale);
 
-  return max(0, scale.sub(pct)).mul(x).add(min(scale, pct).mul(y)).add(scale.div(2)).div(scale);
+  return (max(0, scale - pct) * x + min(scale, pct) * y + scale / 2n) / scale;
 };
 
-export const parsePercent = (value: string) => utils.parseUnits(value, 2);
-export const parseWad = (value: string) => utils.parseUnits(value, 18);
-export const parseRay = (value: string) => utils.parseUnits(value, 27);
+export const parsePercent = (value: string) => parseUnits(value, 2);
+export const parseWad = (value: string) => parseUnits(value, 18);
+export const parseRay = (value: string) => parseUnits(value, 27);
 
-export const powHalfUp = (x: BigNumberish, exponent: BigNumberish, scale: BigNumber): BigNumber => {
-  exponent = BigNumber.from(exponent);
+export const powHalfUp = (x: BigNumberish, exponent: BigNumberish, scale: bigint): bigint => {
+  exponent = toBigInt(exponent);
 
-  if (exponent.eq(0)) return BigNumber.from(scale);
-  if (exponent.eq(1)) return BigNumber.from(x);
+  if (exponent === 0n) return toBigInt(scale);
+  if (exponent === 1n) return toBigInt(x);
 
   const xSquared = mulDivHalfUp(x, x, scale);
-  if (exponent.mod(2).eq(0)) return powHalfUp(xSquared, exponent.div(2), scale);
+  if (exponent % 2n === 0n) return powHalfUp(xSquared, exponent / 2n, scale);
 
-  return mulDivHalfUp(x, powHalfUp(xSquared, exponent.sub(1).div(2), scale), scale);
+  return mulDivHalfUp(x, powHalfUp(xSquared, (exponent - 1n) / 2n, scale), scale);
 };
