@@ -7,7 +7,9 @@ on:
         required: true
   workflow_run:
     workflows: ["Jest Test Suite"]
-    branches: [main]
+    branches:
+      - main
+      - ethers-v5
     types:
       - completed
 
