@@ -621,8 +621,8 @@ BigNumber.RAY.percentToDecimals(27); // 1 RAY
 
 [build-img]: https://github.com/Rubilmax/ethers-maths/actions/workflows/release.yml/badge.svg
 [build-url]: https://github.com/Rubilmax/ethers-maths/actions/workflows/release.yml
-[test-img]: https://github.com/Rubilmax/ethers-maths/actions/workflows/jest.yml/badge.svg
-[test-url]: https://github.com/Rubilmax/ethers-maths/actions/workflows/jest.yml
+[test-img]: https://github.com/Rubilmax/ethers-maths/actions/workflows/test.yml/badge.svg
+[test-url]: https://github.com/Rubilmax/ethers-maths/actions/workflows/test.yml
 [downloads-img]: https://img.shields.io/npm/dt/ethers-maths
 [downloads-url]: https://www.npmtrends.com/ethers-maths
 [npm-img]: https://img.shields.io/npm/v/ethers-maths
