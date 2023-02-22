@@ -80,7 +80,6 @@
   "release": {
     "branches": [
       "main",
-      "ethers-v5",
       "ethers-v6"
     ],
     "plugins": [
