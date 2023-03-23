@@ -155,4 +155,8 @@ describe("ethers-maths", () => {
     expect(BigNumber.RAY.rayToPercent().toString()).toEqual(BigNumber.PERCENT.toString());
     expect(BigNumber.RAY.rayToWad().toString()).toEqual(BigNumber.WAD.toString());
   });
+
+  it("should format with 0 digit", async () => {
+    expect(BigNumber.WAD.formatWad(0)).toEqual("1");
+  });
 });
