@@ -114,7 +114,7 @@ BigInt.prototype.format = function (decimals?: number, digits?: number) {
   digits ??= decimals;
 
   return digits < decimals
-    ? formatted.slice(0, dotIndex + 1 + digits)
+    ? formatted.slice(0, dotIndex + (digits > 0 ? digits + 1 : 0))
     : formatted + "0".repeat(digits - decimals);
 };
 BigInt.prototype.toFloat = function (decimals?: number) {
