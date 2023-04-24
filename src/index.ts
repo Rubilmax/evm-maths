@@ -14,10 +14,12 @@ import {
   powHalfUp,
   mulDivUp,
   mulDivDown,
+  approxEqAbs,
 } from "./utils";
 
 declare module "ethers" {
   interface BigNumber {
+    approxEqAbs: (other: BigNumberish, tolerance?: BigNumberish) => boolean;
     min: (other: BigNumberish, ...others: BigNumberish[]) => BigNumber;
     max: (other: BigNumberish, ...others: BigNumberish[]) => BigNumber;
     sum: (others: BigNumberish[]) => BigNumber;
@@ -95,6 +97,9 @@ declare module "ethers" {
   }
 }
 
+BigNumber.prototype.approxEqAbs = function (y: BigNumberish, tolerance: BigNumberish = 0) {
+  return approxEqAbs(this, y, tolerance);
+};
 BigNumber.prototype.min = function (y: BigNumberish, ...others: BigNumberish[]) {
   return min(this, y, ...others);
 };

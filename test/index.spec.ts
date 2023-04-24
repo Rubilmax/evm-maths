@@ -9,6 +9,11 @@ const RAY = BigNumber.RAY.toString();
 const TWO_WAD = BigNumber.WAD.mul(2).toString();
 
 describe("ethers-maths", () => {
+  it("should be approximately equal", async () => {
+    expect(BigNumber.from(0).approxEqAbs(1, 0)).toBeFalsy();
+    expect(BigNumber.from(0).approxEqAbs(1, 1)).toBeTruthy();
+  });
+
   it("should return minimum", async () => {
     expect(BigNumber.WAD.min(0).toString()).toEqual(ZERO);
     expect(BigNumber.WAD.min(BigNumber.RAY).toString()).toEqual(WAD);

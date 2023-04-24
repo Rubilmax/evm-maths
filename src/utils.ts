@@ -2,6 +2,9 @@ import { BigNumber, BigNumberish, utils } from "ethers";
 
 export const pow10 = (power: BigNumberish) => BigNumber.from(10).pow(power);
 
+export const approxEqAbs = (x: BigNumberish, y: BigNumberish, tolerance: BigNumberish = 0) =>
+  BigNumber.from(y).sub(x).abs().lte(tolerance);
+
 export const min = (x: BigNumberish, ...others: BigNumberish[]): BigNumber => {
   x = BigNumber.from(x);
 
