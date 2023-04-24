@@ -2,6 +2,20 @@ import { BigNumberish, parseUnits, toBigInt } from "ethers";
 
 export const pow10 = (power: BigNumberish) => toBigInt(10) ** toBigInt(power);
 
+export const approxEqAbs = (x: BigNumberish, y: BigNumberish, tolerance: BigNumberish = 0) => {
+  x = toBigInt(x);
+  y = toBigInt(y);
+  tolerance = toBigInt(tolerance);
+
+  return abs(y - x) <= tolerance;
+};
+
+export const abs = (x: BigNumberish) => {
+  x = toBigInt(x);
+
+  return x < 0n ? -x : x;
+};
+
 export const min = (x: BigNumberish, ...others: BigNumberish[]): bigint => {
   x = toBigInt(x);
 

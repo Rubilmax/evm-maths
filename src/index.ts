@@ -14,10 +14,14 @@ import {
   powHalfUp,
   mulDivUp,
   mulDivDown,
+  approxEqAbs,
+  abs,
 } from "./utils";
 
 declare global {
   interface BigInt {
+    approxEqAbs: (other: BigNumberish, tolerance?: BigNumberish) => boolean;
+    abs: () => bigint;
     min: (other: BigNumberish, ...others: BigNumberish[]) => bigint;
     max: (other: BigNumberish, ...others: BigNumberish[]) => bigint;
     sum: (others: BigNumberish[]) => bigint;
@@ -95,6 +99,12 @@ declare global {
   }
 }
 
+BigInt.prototype.approxEqAbs = function (y: BigNumberish, tolerance: BigNumberish = 0) {
+  return approxEqAbs(this as bigint, y, tolerance);
+};
+BigInt.prototype.abs = function () {
+  return abs(this as bigint);
+};
 BigInt.prototype.min = function (y: BigNumberish, ...others: BigNumberish[]) {
   return min(this as bigint, y, ...others);
 };

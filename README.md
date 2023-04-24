@@ -40,6 +40,7 @@ BigInt.from(WAD.mul(2)).rayMul(0.5e27); // WAD
 ## Book
 
 - [Scale-agnostic utilities](#scale-agnostic-utilities)
+  - [approxEqAbs](#approxEqAbs)
   - [min](#min)
   - [max](#max)
   - [sum](#sum)
@@ -105,6 +106,20 @@ BigInt.from(WAD.mul(2)).rayMul(0.5e27); // WAD
 ---
 
 ### Scale-agnostic utilities
+
+#### `approxEqAbs`
+
+Returns whether the BigNumber is approximately close to the given BigNumber, within the given tolerance
+
+```typescript
+// only if you want to avoid BigNumber prototype pollution
+import { approxEqAbs } from "ethers-maths/utils";
+
+// Returns whether the BigNumber is approximately close to the given BigNumber, within the given tolerance: true
+approxEqAbs(0, 1, "1");
+BigNumber.approxEqAbs(0, 1, "1");
+BigNumber.from(0).approxEqAbs(1, "1");
+```
 
 #### `min`
 

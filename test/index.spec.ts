@@ -1,3 +1,5 @@
+import { toBigInt } from "ethers";
+
 import "../src";
 
 const ZERO = "0";
@@ -7,6 +9,15 @@ const RAY = BigInt.RAY.toString();
 const TWO_WAD = (BigInt.WAD * 2n).toString();
 
 describe("ethers-maths", () => {
+  it("should be approximately equal", async () => {
+    expect(toBigInt(0).approxEqAbs(1, 0)).toBeFalsy();
+    expect(toBigInt(0).approxEqAbs(1, 1)).toBeTruthy();
+  });
+  it("should return the absolute value", async () => {
+    expect(toBigInt(1).abs()).toEqual(1n);
+    expect(toBigInt(-1).abs()).toEqual(1n);
+  });
+
   it("should return minimum", async () => {
     expect(BigInt.WAD.min(0).toString()).toEqual(ZERO);
     expect(BigInt.WAD.min(BigInt.RAY).toString()).toEqual(WAD);
