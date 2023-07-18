@@ -8,7 +8,7 @@
 [![Commitizen Friendly][commitizen-img]][commitizen-url]
 [![Semantic Release][semantic-release-img]][semantic-release-url]
 
-> ➗ Useful ethers-based math libraries to ease the journey through off-chain fixed-point arithmetics
+> ➗ Useful ethers-based math libraries to ease your journey through off-chain fixed-point arithmetics
 
 ## Install
 
