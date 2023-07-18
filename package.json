@@ -1,6 +1,6 @@
 {
   "name": "ethers-maths",
-  "version": "1.0.0",
+  "version": "4.0.0",
   "description": "➗ Useful ethers-based math libraries to ease the journey through off-chain fixed-point arithmetics",
   "main": "lib/index.js",
   "files": [
