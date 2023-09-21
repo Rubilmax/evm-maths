@@ -32,7 +32,7 @@ import "ethers-maths";
 const WAD = BigInt.pow10(18);
 
 BigInt.from(1).wadMul(WAD); // 1
-BigInt.from(WAD.mul(2)).rayMul(0.5e27); // WAD
+BigInt.from(WAD * 2n).rayMul(0.5e27); // WAD
 ```
 
 ---
@@ -47,6 +47,9 @@ BigInt.from(WAD.mul(2)).rayMul(0.5e27); // WAD
   - [format](#format)
   - [toFloat](#toFloat)
   - [pow10](#pow10)
+  - [mulDiv](#mulDiv)
+  - [mulDivUp](#mulDivUp)
+  - [mulDivDown](#mulDivDown)
 - [Scale constants](#scale-constants)
   - [WAD](#WAD)
   - [RAY](#RAY)
@@ -199,6 +202,45 @@ pow10(2);
 BigInt.pow10(2);
 ```
 
+#### `mulDiv`
+
+Performs a multiplication followed by a division, rounded half up
+
+```typescript
+// only if you want to avoid BigInt prototype pollution
+import { mulDivHalfUp } from "ethers-maths/utils";
+
+// 1.0 (in wad) * 1 / 1 = 1.0 (in wad)
+mulDivHalfUp(BigInt.WAD, 1, 1);
+BigInt.WAD.mulDiv(1, 1);
+```
+
+#### `mulDivUp`
+
+Performs a multiplication followed by a division, rounded up
+
+```typescript
+// only if you want to avoid BigInt prototype pollution
+import { mulDivUp } from "ethers-maths/utils";
+
+// 0.999999999999999999 * 1 / WAD = 1.0 (in wad, rounded up)
+mulDivUp(BigInt.WAD - 1n, 1, BigInt.WAD);
+(BigInt.WAD - 1n).mulDivUp(1, BigInt.WAD);
+```
+
+#### `mulDivDown`
+
+Performs a multiplication followed by a division, rounded down
+
+```typescript
+// only if you want to avoid BigInt prototype pollution
+import { mulDivDown } from "ethers-maths/utils";
+
+// 1.000000000000000001 * 1 / WAD = 1.0 (in wad, rounded down)
+mulDivDown(BigInt.WAD + 1n, 1, BigInt.WAD);
+(BigInt.WAD + 1n).mulDivDown(1, BigInt.WAD);
+```
+
 ---
 
 ### Scale constants
@@ -315,7 +357,7 @@ Returns the result of the addition of a BigNumberish and a wad-based percentage 
 
 ```typescript
 BigInt.WAD.wadAdd(
-  BigInt.HALF_WAD // 50% in wad
+  BigInt.HALF_WAD, // 50% in wad
 ); // 1.0 * (1.0 + 0.5) = 1.5 (in wad)
 ```
 
@@ -325,7 +367,7 @@ Returns the result of the subtraction of a BigNumberish and a wad-based percenta
 
 ```typescript
 BigInt.WAD.wadSub(
-  BigInt.HALF_WAD // 50% in wad
+  BigInt.HALF_WAD, // 50% in wad
 ); // 1.0 * (1.0 - 0.5) = 0.5 (in wad)
 ```
 
@@ -335,8 +377,8 @@ Returns the weighted average of 2 BigNumberishs, using a wad-based weight (18 de
 
 ```typescript
 BigInt.WAD.wadAvg(
-  BigInt.WAD.mul(2), // 2 WAD
-  BigInt.HALF_WAD // 50% in WAD
+  BigInt.WAD * 2n, // 2 WAD
+  BigInt.HALF_WAD, // 50% in WAD
 ); // 1.0 * (1.0 - 0.5) + 2.0 * 0.5 = 1.5 (in wad)
 ```
 
@@ -345,8 +387,9 @@ BigInt.WAD.wadAvg(
 Returns the integer power of a BigInt, calculated using wad-based multiplications (18 decimals precision), rounded half up
 
 ```typescript
-BigInt.WAD.mul(2) // 2 WAD
-  .wadPow(2); // 2.0 ** 2 = 4.0 (in wad)
+BigInt.WAD *
+  2n // 2 WAD
+    .wadPow(2); // 2.0 ** 2 = 4.0 (in wad)
 ```
 
 #### `wadMulUp`
@@ -354,7 +397,7 @@ BigInt.WAD.mul(2) // 2 WAD
 Returns the result of the wad-based multiplication (18 decimals precision), rounded up
 
 ```typescript
-BigInt.WAD.sub(1).wadMulUp(BigInt.WAD.sub(1)); // 0.999999999999999999 * 0.999999999999999999 = 0.999999999999999999 (in wad, rounded up)
+(BigInt.WAD - 1n).wadMulUp(BigInt.WAD - 1n); // 0.999999999999999999 * 0.999999999999999999 = 0.999999999999999999 (in wad, rounded up)
 ```
 
 #### `wadMulDown`
@@ -362,7 +405,7 @@ BigInt.WAD.sub(1).wadMulUp(BigInt.WAD.sub(1)); // 0.999999999999999999 * 0.99999
 Returns the result of the wad-based multiplication (18 decimals precision), rounded down
 
 ```typescript
-BigInt.WAD.sub(1).wadMulDown(BigInt.WAD.sub(1)); // 0.999999999999999999 * 0.999999999999999999 = 0.999999999999999998 (in wad, rounded down)
+(BigInt.WAD - 1n).wadMulDown(BigInt.WAD - 1n); // 0.999999999999999999 * 0.999999999999999999 = 0.999999999999999998 (in wad, rounded down)
 ```
 
 #### `wadDivUp`
@@ -370,7 +413,7 @@ BigInt.WAD.sub(1).wadMulDown(BigInt.WAD.sub(1)); // 0.999999999999999999 * 0.999
 Returns the result of the wad-based division (18 decimals precision), rounded up
 
 ```typescript
-BigInt.WAD.wadDivUp(BigInt.WAD.sub(1)); // 1.0 * 0.999999999999999999 = 1.000000000000000002 (in wad, rounded up)
+BigInt.WAD.wadDivUp(BigInt.WAD - 1n); // 1.0 * 0.999999999999999999 = 1.000000000000000002 (in wad, rounded up)
 ```
 
 #### `wadDivDown`
@@ -378,7 +421,7 @@ BigInt.WAD.wadDivUp(BigInt.WAD.sub(1)); // 1.0 * 0.999999999999999999 = 1.000000
 Returns the result of the wad-based division (18 decimals precision), rounded down
 
 ```typescript
-BigInt.WAD.wadDivDown(BigInt.WAD.sub(1)); // 1.0 * 0.999999999999999999 = 1.000000000000000001 (in wad, rounded down)
+BigInt.WAD.wadDivDown(BigInt.WAD - 1n); // 1.0 * 0.999999999999999999 = 1.000000000000000001 (in wad, rounded down)
 ```
 
 #### `formatWad`
@@ -449,7 +492,7 @@ Returns the result of the addition of a BigNumberish and a ray-based percentage 
 
 ```typescript
 BigInt.RAY.rayAdd(
-  BigInt.HALF_RAY // 50% in ray
+  BigInt.HALF_RAY, // 50% in ray
 ); // 1.0 * (1.0 + 0.5) = 1.5 (in ray)
 ```
 
@@ -459,7 +502,7 @@ Returns the result of the subtraction of a BigNumberish and a ray-based percenta
 
 ```typescript
 BigInt.RAY.raySub(
-  BigInt.HALF_RAY // 50% in ray
+  BigInt.HALF_RAY, // 50% in ray
 ); // 1.0 * (1.0 - 0.5) = 0.5 (in ray)
 ```
 
@@ -469,8 +512,8 @@ Returns the weighted average of 2 BigNumberishs, using a ray-based weight (27 de
 
 ```typescript
 BigInt.RAY.rayAvg(
-  BigInt.RAY.mul(2), // 2 RAY
-  BigInt.HALF_RAY // 50% in RAY
+  BigInt.RAY * 2n, // 2 RAY
+  BigInt.HALF_RAY, // 50% in RAY
 ); // 1.0 * (1.0 - 0.5) + 2.0 * 0.5 = 1.5 (in ray)
 ```
 
@@ -479,7 +522,7 @@ BigInt.RAY.rayAvg(
 Returns the integer power of a BigInt, calculated using ray-based multiplications (27 decimals precision), rounded half up
 
 ```typescript
-BigInt.RAY.mul(2) // 2 RAY
+(BigInt.RAY * 2n) // 2 RAY
   .rayPow(2); // 2.0 ** 2 = 4.0 (in ray)
 ```
 
@@ -488,7 +531,7 @@ BigInt.RAY.mul(2) // 2 RAY
 Returns the result of the ray-based multiplication (27 decimals precision), rounded up
 
 ```typescript
-BigInt.RAY.sub(1).rayMulUp(BigInt.RAY.sub(1)); // 0.999999999999999999999999999 * 0.999999999999999999999999999 = 0.999999999999999999999999999 (in ray, rounded up)
+(BigInt.RAY - 1n).rayMulUp(BigInt.RAY - 1n); // 0.999999999999999999999999999 * 0.999999999999999999999999999 = 0.999999999999999999999999999 (in ray, rounded up)
 ```
 
 #### `rayMulDown`
@@ -496,7 +539,7 @@ BigInt.RAY.sub(1).rayMulUp(BigInt.RAY.sub(1)); // 0.999999999999999999999999999 
 Returns the result of the ray-based multiplication (27 decimals precision), rounded down
 
 ```typescript
-BigInt.RAY.sub(1).rayMulDown(BigInt.RAY.sub(1)); // 0.999999999999999999999999999 * 0.999999999999999999999999999 = 0.999999999999999999999999998 (in ray, rounded down)
+(BigInt.RAY - 1n).rayMulDown(BigInt.RAY - 1n); // 0.999999999999999999999999999 * 0.999999999999999999999999999 = 0.999999999999999999999999998 (in ray, rounded down)
 ```
 
 #### `rayDivUp`
@@ -504,7 +547,7 @@ BigInt.RAY.sub(1).rayMulDown(BigInt.RAY.sub(1)); // 0.99999999999999999999999999
 Returns the result of the ray-based division (27 decimals precision), rounded up
 
 ```typescript
-BigInt.RAY.rayDivUp(BigInt.RAY.sub(1)); // 1.0 * 0.999999999999999999999999999 = 1.000000000000000000000000002 (in ray, rounded up)
+BigInt.RAY.rayDivUp(BigInt.RAY - 1n); // 1.0 * 0.999999999999999999999999999 = 1.000000000000000000000000002 (in ray, rounded up)
 ```
 
 #### `rayDivDown`
@@ -512,7 +555,7 @@ BigInt.RAY.rayDivUp(BigInt.RAY.sub(1)); // 1.0 * 0.999999999999999999999999999 =
 Returns the result of the ray-based division (27 decimals precision), rounded down
 
 ```typescript
-BigInt.RAY.rayDivDown(BigInt.RAY.sub(1)); // 1.0 * 0.999999999999999999999999999 = 1.000000000000000000000000001 (in ray, rounded down)
+BigInt.RAY.rayDivDown(BigInt.RAY - 1n); // 1.0 * 0.999999999999999999999999999 = 1.000000000000000000000000001 (in ray, rounded down)
 ```
 
 #### `formatRay`
@@ -583,7 +626,7 @@ Returns the result of the addition of a BigNumberish and a percent-based percent
 
 ```typescript
 BigInt.PERCENT.percentAdd(
-  BigInt.HALF_PERCENT // 50% in percent
+  BigInt.HALF_PERCENT, // 50% in percent
 ); // 1.0 * (1.0 + 0.5) = 1.5 (in percent)
 ```
 
@@ -593,7 +636,7 @@ Returns the result of the subtraction of a BigNumberish and a percent-based perc
 
 ```typescript
 BigInt.PERCENT.percentSub(
-  BigInt.HALF_PERCENT // 50% in percent
+  BigInt.HALF_PERCENT, // 50% in percent
 ); // 1.0 * (1.0 - 0.5) = 0.5 (in percent)
 ```
 
@@ -603,8 +646,8 @@ Returns the weighted average of 2 BigNumberishs, using a percent-based weight (4
 
 ```typescript
 BigInt.PERCENT.percentAvg(
-  BigInt.PERCENT.mul(2), // 2 PERCENT
-  BigInt.HALF_PERCENT // 50% in PERCENT
+  BigInt.PERCENT * 2n, // 2 PERCENT
+  BigInt.HALF_PERCENT, // 50% in PERCENT
 ); // 1.0 * (1.0 - 0.5) + 2.0 * 0.5 = 1.5 (in percent)
 ```
 
@@ -613,8 +656,9 @@ BigInt.PERCENT.percentAvg(
 Returns the integer power of a BigInt, calculated using percent-based multiplications (4 decimals precision), rounded half up
 
 ```typescript
-BigInt.PERCENT.mul(2) // 2 PERCENT
-  .percentPow(2); // 2.0 ** 2 = 4.0 (in percent)
+BigInt.PERCENT *
+  2n // 2 PERCENT
+    .percentPow(2); // 2.0 ** 2 = 4.0 (in percent)
 ```
 
 #### `percentMulUp`
@@ -622,7 +666,7 @@ BigInt.PERCENT.mul(2) // 2 PERCENT
 Returns the result of the percent-based multiplication (4 decimals precision), rounded up
 
 ```typescript
-BigInt.PERCENT.sub(1).percentMulUp(BigInt.PERCENT.sub(1)); // 0.9999 * 0.9999 = 0.9999 (in percent, rounded up)
+(BigInt.PERCENT - 1n).percentMulUp(BigInt.PERCENT - 1n); // 0.9999 * 0.9999 = 0.9999 (in percent, rounded up)
 ```
 
 #### `percentMulDown`
@@ -630,7 +674,7 @@ BigInt.PERCENT.sub(1).percentMulUp(BigInt.PERCENT.sub(1)); // 0.9999 * 0.9999 = 
 Returns the result of the percent-based multiplication (4 decimals precision), rounded down
 
 ```typescript
-BigInt.PERCENT.sub(1).percentMulDown(BigInt.PERCENT.sub(1)); // 0.9999 * 0.9999 = 0.9998 (in percent, rounded down)
+(BigInt.PERCENT - 1n).percentMulDown(BigInt.PERCENT - 1n); // 0.9999 * 0.9999 = 0.9998 (in percent, rounded down)
 ```
 
 #### `percentDivUp`
@@ -638,7 +682,7 @@ BigInt.PERCENT.sub(1).percentMulDown(BigInt.PERCENT.sub(1)); // 0.9999 * 0.9999 
 Returns the result of the percent-based division (4 decimals precision), rounded up
 
 ```typescript
-BigInt.PERCENT.percentDivUp(BigInt.PERCENT.sub(1)); // 1.0 * 0.9999 = 1.0002 (in percent, rounded up)
+BigInt.PERCENT.percentDivUp(BigInt.PERCENT - 1n); // 1.0 * 0.9999 = 1.0002 (in percent, rounded up)
 ```
 
 #### `percentDivDown`
@@ -646,7 +690,7 @@ BigInt.PERCENT.percentDivUp(BigInt.PERCENT.sub(1)); // 1.0 * 0.9999 = 1.0002 (in
 Returns the result of the percent-based division (4 decimals precision), rounded down
 
 ```typescript
-BigInt.PERCENT.percentDivDown(BigInt.PERCENT.sub(1)); // 1.0 * 0.9999 = 1.0001 (in percent, rounded down)
+BigInt.PERCENT.percentDivDown(BigInt.PERCENT - 1n); // 1.0 * 0.9999 = 1.0001 (in percent, rounded down)
 ```
 
 #### `formatPercent`

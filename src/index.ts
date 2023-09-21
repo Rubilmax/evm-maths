@@ -28,6 +28,10 @@ declare global {
     format: (decimals?: number, digits?: number) => string;
     toFloat: (decimals?: number) => number;
 
+    mulDiv: (other: BigNumberish, scale: BigNumberish) => bigint;
+    mulDivUp: (other: BigNumberish, scale: BigNumberish) => bigint;
+    mulDivDown: (other: BigNumberish, scale: BigNumberish) => bigint;
+
     compMul: (other: BigNumberish) => bigint;
     compDiv: (other: BigNumberish) => bigint;
 
@@ -129,6 +133,16 @@ BigInt.prototype.format = function (decimals?: number, digits?: number) {
 };
 BigInt.prototype.toFloat = function (decimals?: number) {
   return parseFloat(this.format(decimals));
+};
+
+BigInt.prototype.mulDiv = function (other: BigNumberish, scale: BigNumberish) {
+  return mulDivHalfUp(this as bigint, other, scale);
+};
+BigInt.prototype.mulDivUp = function (other: BigNumberish, scale: BigNumberish) {
+  return mulDivUp(this as bigint, other, scale);
+};
+BigInt.prototype.mulDivDown = function (other: BigNumberish, scale: BigNumberish) {
+  return mulDivDown(this as bigint, other, scale);
 };
 
 BigInt.prototype.compMul = function (other: BigNumberish) {
