@@ -1,5 +1,7 @@
 import { BigNumberish, parseUnits, toBigInt } from "ethers";
 
+export type MulDiv = (x: BigNumberish, y: BigNumberish, scale: BigNumberish) => bigint;
+
 export const pow10 = (power: BigNumberish) => toBigInt(10) ** toBigInt(power);
 
 export const approxEqAbs = (x: BigNumberish, y: BigNumberish, tolerance: BigNumberish = 0) => {
@@ -40,7 +42,7 @@ export const sum = (initialValue: BigNumberish, others: BigNumberish[]) => {
   return others.reduce<bigint>((acc, val) => acc + toBigInt(val), toBigInt(initialValue));
 };
 
-export const mulDivHalfUp = (x: BigNumberish, y: BigNumberish, scale: BigNumberish) => {
+export const mulDivHalfUp: MulDiv = (x, y, scale) => {
   x = toBigInt(x);
   y = toBigInt(y);
   scale = toBigInt(scale);
@@ -49,7 +51,7 @@ export const mulDivHalfUp = (x: BigNumberish, y: BigNumberish, scale: BigNumberi
   return (x * y + scale / 2n) / scale;
 };
 
-export const mulDivDown = (x: BigNumberish, y: BigNumberish, scale: BigNumberish) => {
+export const mulDivDown: MulDiv = (x, y, scale) => {
   x = toBigInt(x);
   y = toBigInt(y);
   scale = toBigInt(scale);
@@ -58,7 +60,7 @@ export const mulDivDown = (x: BigNumberish, y: BigNumberish, scale: BigNumberish
   return (x * y) / scale;
 };
 
-export const mulDivUp = (x: BigNumberish, y: BigNumberish, scale: BigNumberish) => {
+export const mulDivUp: MulDiv = (x, y, scale) => {
   x = toBigInt(x);
   y = toBigInt(y);
   scale = toBigInt(scale);
@@ -71,7 +73,7 @@ export const avgHalfUp = (
   x: BigNumberish,
   y: BigNumberish,
   pct: BigNumberish,
-  scale: BigNumberish
+  scale: BigNumberish,
 ) => {
   x = toBigInt(x);
   y = toBigInt(y);
@@ -85,14 +87,36 @@ export const parsePercent = (value: string) => parseUnits(value, 2);
 export const parseWad = (value: string) => parseUnits(value, 18);
 export const parseRay = (value: string) => parseUnits(value, 27);
 
-export const powHalfUp = (x: BigNumberish, exponent: BigNumberish, scale: bigint): bigint => {
+export const pow = (
+  x: BigNumberish,
+  exponent: BigNumberish,
+  scale: bigint,
+  mulDiv: MulDiv = mulDivHalfUp,
+): bigint => {
   exponent = toBigInt(exponent);
 
   if (exponent === 0n) return toBigInt(scale);
   if (exponent === 1n) return toBigInt(x);
 
-  const xSquared = mulDivHalfUp(x, x, scale);
-  if (exponent % 2n === 0n) return powHalfUp(xSquared, exponent / 2n, scale);
+  const xSquared = mulDiv(x, x, scale);
+  if (exponent % 2n === 0n) return pow(xSquared, exponent / 2n, scale, mulDiv);
 
-  return mulDivHalfUp(x, powHalfUp(xSquared, (exponent - 1n) / 2n, scale), scale);
+  return mulDiv(x, pow(xSquared, (exponent - 1n) / 2n, scale, mulDiv), scale);
+};
+
+export const exp3 = (
+  x: BigNumberish,
+  exponent: BigNumberish,
+  scale: BigNumberish,
+  mulDiv: MulDiv = mulDivDown,
+) => {
+  x = toBigInt(x);
+  exponent = toBigInt(exponent);
+  scale = toBigInt(scale);
+
+  const firstTerm = x * exponent;
+  const secondTerm = mulDiv(firstTerm, firstTerm, 2n * scale);
+  const thirdTerm = mulDiv(secondTerm, firstTerm, 3n * scale);
+
+  return scale + firstTerm + secondTerm + thirdTerm;
 };

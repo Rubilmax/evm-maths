@@ -11,11 +11,12 @@ import {
   parsePercent,
   parseRay,
   parseWad,
-  powHalfUp,
+  pow,
   mulDivUp,
   mulDivDown,
   approxEqAbs,
   abs,
+  exp3,
 } from "./utils";
 
 declare global {
@@ -45,6 +46,9 @@ declare global {
     percentDivDown: (other: BigNumberish) => bigint;
     percentAvg: (other: BigNumberish, pct: BigNumberish) => bigint;
     percentPow: (exponent: BigNumberish) => bigint;
+    percentPowUp: (exponent: BigNumberish) => bigint;
+    percentPowDown: (exponent: BigNumberish) => bigint;
+    percentExp3: (exponent: BigNumberish) => bigint;
     percentToDecimals: (decimals: number) => bigint;
     percentToWad: () => bigint;
     percentToRay: () => bigint;
@@ -61,6 +65,9 @@ declare global {
     wadDivDown: (other: BigNumberish) => bigint;
     wadAvg: (other: BigNumberish, wad: BigNumberish) => bigint;
     wadPow: (exponent: BigNumberish) => bigint;
+    wadPowUp: (exponent: BigNumberish) => bigint;
+    wadPowDown: (exponent: BigNumberish) => bigint;
+    wadExp3: (exponent: BigNumberish) => bigint;
     wadToDecimals: (decimals: number) => bigint;
     wadToPercent: () => bigint;
     wadToRay: () => bigint;
@@ -77,6 +84,9 @@ declare global {
     rayDivDown: (other: BigNumberish) => bigint;
     rayAvg: (other: BigNumberish, ray: BigNumberish) => bigint;
     rayPow: (exponent: BigNumberish) => bigint;
+    rayPowUp: (exponent: BigNumberish) => bigint;
+    rayPowDown: (exponent: BigNumberish) => bigint;
+    rayExp3: (exponent: BigNumberish) => bigint;
     rayToDecimals: (decimals: number) => bigint;
     rayToPercent: () => bigint;
     rayToWad: () => bigint;
@@ -180,7 +190,16 @@ BigInt.prototype.percentAvg = function (other: BigNumberish, pct: BigNumberish) 
   return avgHalfUp(this as bigint, other, pct, PERCENT);
 };
 BigInt.prototype.percentPow = function (exponent: BigNumberish) {
-  return powHalfUp(this as bigint, exponent, PERCENT);
+  return pow(this as bigint, exponent, PERCENT, mulDivHalfUp);
+};
+BigInt.prototype.percentPowUp = function (exponent: BigNumberish) {
+  return pow(this as bigint, exponent, PERCENT, mulDivUp);
+};
+BigInt.prototype.percentPowDown = function (exponent: BigNumberish) {
+  return pow(this as bigint, exponent, PERCENT, mulDivDown);
+};
+BigInt.prototype.percentExp3 = function (exponent: BigNumberish) {
+  return exp3(this as bigint, exponent, PERCENT, mulDivDown);
 };
 BigInt.prototype.percentToDecimals = function (decimals: number) {
   if (decimals <= 4) {
@@ -232,7 +251,16 @@ BigInt.prototype.wadAvg = function (other: BigNumberish, wad: BigNumberish) {
   return avgHalfUp(this as bigint, other, wad, WAD);
 };
 BigInt.prototype.wadPow = function (exponent: BigNumberish) {
-  return powHalfUp(this as bigint, exponent, WAD);
+  return pow(this as bigint, exponent, WAD, mulDivHalfUp);
+};
+BigInt.prototype.wadPowUp = function (exponent: BigNumberish) {
+  return pow(this as bigint, exponent, WAD, mulDivUp);
+};
+BigInt.prototype.wadPowDown = function (exponent: BigNumberish) {
+  return pow(this as bigint, exponent, WAD, mulDivDown);
+};
+BigInt.prototype.wadExp3 = function (exponent: BigNumberish) {
+  return exp3(this as bigint, exponent, WAD, mulDivDown);
 };
 BigInt.prototype.wadToDecimals = function (decimals: number) {
   if (decimals <= 18) {
@@ -284,7 +312,16 @@ BigInt.prototype.rayAvg = function (other: BigNumberish, ray: BigNumberish) {
   return avgHalfUp(this as bigint, other, ray, RAY);
 };
 BigInt.prototype.rayPow = function (exponent: BigNumberish) {
-  return powHalfUp(this as bigint, exponent, RAY);
+  return pow(this as bigint, exponent, RAY, mulDivHalfUp);
+};
+BigInt.prototype.rayPowUp = function (exponent: BigNumberish) {
+  return pow(this as bigint, exponent, RAY, mulDivUp);
+};
+BigInt.prototype.rayPowDown = function (exponent: BigNumberish) {
+  return pow(this as bigint, exponent, RAY, mulDivDown);
+};
+BigInt.prototype.rayExp3 = function (exponent: BigNumberish) {
+  return exp3(this as bigint, exponent, RAY, mulDivDown);
 };
 BigInt.prototype.rayToDecimals = function (decimals: number) {
   if (decimals <= 27) {
