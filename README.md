@@ -35,6 +35,14 @@ BigInt.from(1).wadMul(WAD); // 1
 BigInt.from(WAD * 2n).rayMul(0.5e27); // WAD
 ```
 
+If you choose to avoid prototype pollution, you can always import specific utilities:
+
+```typescript
+import * as WadMath from "ethers-maths/lib/wad";
+import * as RayMath from "ethers-maths/lib/ray";
+import * as PercentMath from "ethers-maths/lib/percent";
+```
+
 ---
 
 ## Book
@@ -125,7 +133,7 @@ Returns whether the BigNumber is approximately close to the given BigNumber, wit
 
 ```typescript
 // only if you want to avoid BigNumber prototype pollution
-import { approxEqAbs } from "ethers-maths/utils";
+import { approxEqAbs } from "ethers-maths/lib/utils";
 
 // Returns whether the BigNumber is approximately close to the given BigNumber, within the given tolerance: true
 approxEqAbs(0, 1, "1");
@@ -139,7 +147,7 @@ Returns the minimum between input BigNumberish, as a BigInt
 
 ```typescript
 // only if you want to avoid BigInt prototype pollution
-import { min } from "ethers-maths/utils";
+import { min } from "ethers-maths/lib/utils";
 
 // Returns the minimum between input BigNumberish, as a BigInt: 0
 min(0, 1, "2", ...);
@@ -153,7 +161,7 @@ Returns the maximum between input BigNumberish, as a BigInt
 
 ```typescript
 // only if you want to avoid BigInt prototype pollution
-import { max } from "ethers-maths/utils";
+import { max } from "ethers-maths/lib/utils";
 
 // Returns the maximum between input BigNumberish, as a BigInt: 2
 max(0, 1, "2", ...);
@@ -167,7 +175,7 @@ Returns the sum of input BigNumberish array, as a BigInt
 
 ```typescript
 // only if you want to avoid BigInt prototype pollution
-import { sum } from "ethers-maths/utils";
+import { sum } from "ethers-maths/lib/utils";
 
 // Returns the sum of input BigNumberish array, as a BigInt: 3
 sum([0, 1, "2"]);
@@ -204,7 +212,7 @@ Returns a 1 followed by the input number of zeros (10 raised to the power of the
 
 ```typescript
 // only if you want to avoid BigInt prototype pollution
-import { pow10 } from "ethers-maths/utils";
+import { pow10 } from "ethers-maths/lib/utils";
 
 // Returns a 1 followed by the input number of zeros: 100
 pow10(2);
@@ -217,7 +225,7 @@ Performs a multiplication followed by a division, rounded half up
 
 ```typescript
 // only if you want to avoid BigInt prototype pollution
-import { mulDivHalfUp } from "ethers-maths/utils";
+import { mulDivHalfUp } from "ethers-maths/lib/utils";
 
 // 1.0 (in wad) * 1 / 1 = 1.0 (in wad)
 mulDivHalfUp(BigInt.WAD, 1, 1);
@@ -230,7 +238,7 @@ Performs a multiplication followed by a division, rounded up
 
 ```typescript
 // only if you want to avoid BigInt prototype pollution
-import { mulDivUp } from "ethers-maths/utils";
+import { mulDivUp } from "ethers-maths/lib/utils";
 
 // 0.999999999999999999 * 1 / WAD = 1.0 (in wad, rounded up)
 mulDivUp(BigInt.WAD - 1n, 1, BigInt.WAD);
@@ -243,7 +251,7 @@ Performs a multiplication followed by a division, rounded down
 
 ```typescript
 // only if you want to avoid BigInt prototype pollution
-import { mulDivDown } from "ethers-maths/utils";
+import { mulDivDown } from "ethers-maths/lib/utils";
 
 // 1.000000000000000001 * 1 / WAD = 1.0 (in wad, rounded down)
 mulDivDown(BigInt.WAD + 1n, 1, BigInt.WAD);
@@ -262,7 +270,7 @@ _Most commonly used as the ERC20 token unit_
 
 ```typescript
 // only if you want to avoid BigInt prototype pollution
-import { WAD } from "ethers-maths/constants";
+import { WAD } from "ethers-maths/lib/constants";
 
 // Returns a 1 followed by 18 zeros: 1000000000000000000
 WAD;
@@ -277,7 +285,7 @@ _Most commonly used as Aave's index unit_
 
 ```typescript
 // only if you want to avoid BigInt prototype pollution
-import { RAY } from "ethers-maths/constants";
+import { RAY } from "ethers-maths/lib/constants";
 
 // Returns a 1 followed by 27 zeros: 1000000000000000000000000000
 RAY;
@@ -292,7 +300,7 @@ _Most commonly used as Aave's `PERCENTAGE_FACTOR`_
 
 ```typescript
 // only if you want to avoid BigInt prototype pollution
-import { PERCENT } from "ethers-maths/constants";
+import { PERCENT } from "ethers-maths/lib/constants";
 
 // Returns a 1 followed by 4 zeros: 10000
 PERCENT;
@@ -305,7 +313,7 @@ Returns half of the common WAD unit, which is also known as `0.5 ether` in Solid
 
 ```typescript
 // only if you want to avoid BigInt prototype pollution
-import { HALF_WAD } from "ethers-maths/constants";
+import { HALF_WAD } from "ethers-maths/lib/constants";
 
 // Returns a 1 followed by 18 zeros: 1000000000000000000
 HALF_WAD;
@@ -318,7 +326,7 @@ Returns half of the common RAY unit, which is also known as `0.5e9 ether` in Sol
 
 ```typescript
 // only if you want to avoid BigInt prototype pollution
-import { HALF_RAY } from "ethers-maths/constants";
+import { HALF_RAY } from "ethers-maths/lib/constants";
 
 // Returns a 1 followed by 27 zeros: 1000000000000000000000000000
 HALF_RAY;
@@ -333,7 +341,7 @@ _Most commonly used as Aave's `HALF_PERCENTAGE_FACTOR`_
 
 ```typescript
 // only if you want to avoid BigInt prototype pollution
-import { HALF_PERCENT } from "ethers-maths/constants";
+import { HALF_PERCENT } from "ethers-maths/lib/constants";
 
 // Returns a 1 followed by 4 zeros: 10000
 HALF_PERCENT;

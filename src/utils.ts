@@ -1,4 +1,4 @@
-import { BigNumberish, parseUnits, toBigInt } from "ethers";
+import { BigNumberish, toBigInt } from "ethers";
 
 export type MulDiv = (x: BigNumberish, y: BigNumberish, scale: BigNumberish) => bigint;
 
@@ -82,10 +82,6 @@ export const avgHalfUp = (
 
   return (max(0, scale - pct) * x + min(scale, pct) * y + scale / 2n) / scale;
 };
-
-export const parsePercent = (value: string) => parseUnits(value, 2);
-export const parseWad = (value: string) => parseUnits(value, 18);
-export const parseRay = (value: string) => parseUnits(value, 27);
 
 export const pow = (
   x: BigNumberish,
