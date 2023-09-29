@@ -104,19 +104,62 @@ export const pow = (
   return mulDiv(x, pow(xSquared, (exponent - 1n) / 2n, scale, mulDiv), scale);
 };
 
-export const exp3 = (
+export const expN = (
   x: BigNumberish,
-  exponent: BigNumberish,
+  N: BigNumberish,
   scale: BigNumberish,
   mulDiv: MulDiv = mulDivDown,
 ) => {
   x = toBigInt(x);
-  exponent = toBigInt(exponent);
   scale = toBigInt(scale);
+  N = toBigInt(N);
 
-  const firstTerm = x * exponent;
-  const secondTerm = mulDiv(firstTerm, firstTerm, 2n * scale);
-  const thirdTerm = mulDiv(secondTerm, firstTerm, 3n * scale);
+  let res = scale;
+  let monomial = scale;
+  for (let k = toBigInt(1); k <= N; k++) {
+    monomial = mulDiv(monomial, x, k * scale);
+    res += monomial;
+  }
 
-  return scale + firstTerm + secondTerm + thirdTerm;
+  return res;
+};
+
+export const getConvertToAssets = (
+  virtualAssets: BigNumberish,
+  virtualShares: BigNumberish,
+  mulDiv: MulDiv,
+) => {
+  virtualAssets = toBigInt(virtualAssets);
+  virtualShares = toBigInt(virtualShares);
+
+  return (shares: BigNumberish, totalAssets: BigNumberish, totalShares: BigNumberish) => {
+    totalAssets = toBigInt(totalAssets);
+    totalShares = toBigInt(totalShares);
+
+    return mulDiv(
+      shares,
+      totalAssets + (virtualAssets as bigint),
+      totalShares + (virtualShares as bigint),
+    );
+  };
+};
+
+export const getConvertToShares = (
+  virtualAssets: BigNumberish,
+  virtualShares: BigNumberish,
+  mulDiv: MulDiv,
+) => {
+  virtualAssets = toBigInt(virtualAssets);
+  virtualShares = toBigInt(virtualShares);
+
+  return (assets: BigNumberish, totalAssets: BigNumberish, totalShares: BigNumberish) => {
+    totalAssets = toBigInt(totalAssets);
+    totalShares = toBigInt(totalShares);
+
+    return mulDiv(
+      assets,
+      totalShares + (virtualShares as bigint),
+      totalAssets + (virtualAssets as bigint),
+    );
+  };
 };
