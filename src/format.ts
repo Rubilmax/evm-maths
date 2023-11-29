@@ -1,32 +1,38 @@
-import { BigNumberish, formatUnits, toBigInt } from "ethers";
 import { pow10 } from "./utils";
 
-export const format = (x: BigNumberish, decimals?: number, digits?: number) => {
-  const formatted = formatUnits(x, decimals);
+export const format = (x: bigint, decimals: number = 18, digits?: number) => {
+  decimals = Math.floor(decimals);
+  digits = Math.floor(digits ?? decimals);
 
-  let dotIndex = formatted.indexOf(".");
-  if (dotIndex < 0) dotIndex = formatted.length;
+  if (decimals === 0) return x.toString();
 
-  decimals = formatted.length - 1 - dotIndex;
-  digits ??= decimals;
+  let negative = "";
+  if (x < 0n) {
+    negative = "-";
+    x *= -1n;
+  }
 
-  return digits < decimals
-    ? formatted.slice(0, dotIndex + (digits > 0 ? digits + 1 : 0))
-    : formatted + "0".repeat(digits - decimals);
+  const abs = x.toString().padStart(decimals + 1, "0");
+
+  const length = abs.length;
+  const dotIndex = length - decimals;
+
+  let full = negative + abs.substring(0, dotIndex);
+  if (digits > 0) full += "." + abs.substring(dotIndex, dotIndex + digits).padEnd(digits, "0");
+
+  return full;
 };
 
-export const toFloat = (x: BigNumberish, decimals?: number) => {
+export const toFloat = (x: bigint, decimals?: number) => {
   return parseFloat(format(x, decimals));
 };
 
-export const toDecimals = (x: BigNumberish, decimals: number, scaleDecimals: number) => {
-  x = toBigInt(x);
-
+export const toDecimals = (x: bigint, decimals: number, scaleDecimals: number) => {
   if (decimals <= scaleDecimals) {
-    const ratio = pow10(scaleDecimals - decimals);
+    const ratio = pow10(BigInt(Math.floor(scaleDecimals - decimals)));
 
     return (x + ratio / 2n) / ratio;
   }
 
-  return x * pow10(decimals - scaleDecimals);
+  return x * pow10(BigInt(Math.floor(decimals - scaleDecimals)));
 };

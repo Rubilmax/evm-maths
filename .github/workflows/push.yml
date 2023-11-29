@@ -7,10 +7,10 @@ on:
 
 jobs:
   test:
-    uses: rubilmax/ethers-maths/.github/workflows/test.yml@main
+    uses: rubilmax/evm-maths/.github/workflows/test.yml@main
 
   release:
     needs: test
 
-    uses: rubilmax/ethers-maths/.github/workflows/release.yml@main
+    uses: rubilmax/evm-maths/.github/workflows/release.yml@main
     secrets: inherit

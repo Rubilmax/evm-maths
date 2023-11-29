@@ -1,4 +1,4 @@
-# ethers-maths
+# evm-maths
 
 [![npm package][npm-img]][npm-url]
 [![Build Status][build-img]][build-url]
@@ -8,16 +8,16 @@
 [![Commitizen Friendly][commitizen-img]][commitizen-url]
 [![Semantic Release][semantic-release-img]][semantic-release-url]
 
-> ➗ Useful ethers-based math libraries to ease your journey through off-chain fixed-point arithmetics
+> ➗ Useful bigint math libraries to ease your journey through off-chain fixed-point arithmetics
 
 ## Install
 
 ```bash
-npm install ethers-maths
+npm install evm-maths
 ```
 
 ```bash
-yarn add ethers-maths
+yarn add evm-maths
 ```
 
 ---
@@ -27,7 +27,7 @@ yarn add ethers-maths
 Just import the module and you'll benefit from an augmented, and typed, `BigInt` class!
 
 ```typescript
-import "ethers-maths";
+import "evm-maths";
 
 const WAD = BigInt.pow10(18);
 
@@ -38,9 +38,9 @@ BigInt.from(WAD * 2n).rayMul(0.5e27); // WAD
 If you choose to avoid prototype pollution, you can always import specific utilities:
 
 ```typescript
-import * as WadMath from "ethers-maths/lib/wad";
-import * as RayMath from "ethers-maths/lib/ray";
-import * as PercentMath from "ethers-maths/lib/percent";
+import * as WadMath from "evm-maths/lib/wad";
+import * as RayMath from "evm-maths/lib/ray";
+import * as PercentMath from "evm-maths/lib/percent";
 ```
 
 ---
@@ -133,7 +133,7 @@ Returns whether the BigNumber is approximately close to the given BigNumber, wit
 
 ```typescript
 // only if you want to avoid BigNumber prototype pollution
-import { approxEqAbs } from "ethers-maths/lib/utils";
+import { approxEqAbs } from "evm-maths/lib/utils";
 
 // Returns whether the BigNumber is approximately close to the given BigNumber, within the given tolerance: true
 approxEqAbs(0, 1, "1");
@@ -147,7 +147,7 @@ Returns the minimum between input BigNumberish, as a BigInt
 
 ```typescript
 // only if you want to avoid BigInt prototype pollution
-import { min } from "ethers-maths/lib/utils";
+import { min } from "evm-maths/lib/utils";
 
 // Returns the minimum between input BigNumberish, as a BigInt: 0
 min(0, 1, "2", ...);
@@ -161,7 +161,7 @@ Returns the maximum between input BigNumberish, as a BigInt
 
 ```typescript
 // only if you want to avoid BigInt prototype pollution
-import { max } from "ethers-maths/lib/utils";
+import { max } from "evm-maths/lib/utils";
 
 // Returns the maximum between input BigNumberish, as a BigInt: 2
 max(0, 1, "2", ...);
@@ -175,7 +175,7 @@ Returns the sum of input BigNumberish array, as a BigInt
 
 ```typescript
 // only if you want to avoid BigInt prototype pollution
-import { sum } from "ethers-maths/lib/utils";
+import { sum } from "evm-maths/lib/utils";
 
 // Returns the sum of input BigNumberish array, as a BigInt: 3
 sum([0, 1, "2"]);
@@ -212,7 +212,7 @@ Returns a 1 followed by the input number of zeros (10 raised to the power of the
 
 ```typescript
 // only if you want to avoid BigInt prototype pollution
-import { pow10 } from "ethers-maths/lib/utils";
+import { pow10 } from "evm-maths/lib/utils";
 
 // Returns a 1 followed by the input number of zeros: 100
 pow10(2);
@@ -225,7 +225,7 @@ Performs a multiplication followed by a division, rounded half up
 
 ```typescript
 // only if you want to avoid BigInt prototype pollution
-import { mulDivHalfUp } from "ethers-maths/lib/utils";
+import { mulDivHalfUp } from "evm-maths/lib/utils";
 
 // 1.0 (in wad) * 1 / 1 = 1.0 (in wad)
 mulDivHalfUp(BigInt.WAD, 1, 1);
@@ -238,7 +238,7 @@ Performs a multiplication followed by a division, rounded up
 
 ```typescript
 // only if you want to avoid BigInt prototype pollution
-import { mulDivUp } from "ethers-maths/lib/utils";
+import { mulDivUp } from "evm-maths/lib/utils";
 
 // 0.999999999999999999 * 1 / WAD = 1.0 (in wad, rounded up)
 mulDivUp(BigInt.WAD - 1n, 1, BigInt.WAD);
@@ -251,7 +251,7 @@ Performs a multiplication followed by a division, rounded down
 
 ```typescript
 // only if you want to avoid BigInt prototype pollution
-import { mulDivDown } from "ethers-maths/lib/utils";
+import { mulDivDown } from "evm-maths/lib/utils";
 
 // 1.000000000000000001 * 1 / WAD = 1.0 (in wad, rounded down)
 mulDivDown(BigInt.WAD + 1n, 1, BigInt.WAD);
@@ -270,7 +270,7 @@ _Most commonly used as the ERC20 token unit_
 
 ```typescript
 // only if you want to avoid BigInt prototype pollution
-import { WAD } from "ethers-maths/lib/constants";
+import { WAD } from "evm-maths/lib/constants";
 
 // Returns a 1 followed by 18 zeros: 1000000000000000000
 WAD;
@@ -285,7 +285,7 @@ _Most commonly used as Aave's index unit_
 
 ```typescript
 // only if you want to avoid BigInt prototype pollution
-import { RAY } from "ethers-maths/lib/constants";
+import { RAY } from "evm-maths/lib/constants";
 
 // Returns a 1 followed by 27 zeros: 1000000000000000000000000000
 RAY;
@@ -300,7 +300,7 @@ _Most commonly used as Aave's `PERCENTAGE_FACTOR`_
 
 ```typescript
 // only if you want to avoid BigInt prototype pollution
-import { PERCENT } from "ethers-maths/lib/constants";
+import { PERCENT } from "evm-maths/lib/constants";
 
 // Returns a 1 followed by 4 zeros: 10000
 PERCENT;
@@ -313,7 +313,7 @@ Returns half of the common WAD unit, which is also known as `0.5 ether` in Solid
 
 ```typescript
 // only if you want to avoid BigInt prototype pollution
-import { HALF_WAD } from "ethers-maths/lib/constants";
+import { HALF_WAD } from "evm-maths/lib/constants";
 
 // Returns a 1 followed by 18 zeros: 1000000000000000000
 HALF_WAD;
@@ -326,7 +326,7 @@ Returns half of the common RAY unit, which is also known as `0.5e9 ether` in Sol
 
 ```typescript
 // only if you want to avoid BigInt prototype pollution
-import { HALF_RAY } from "ethers-maths/lib/constants";
+import { HALF_RAY } from "evm-maths/lib/constants";
 
 // Returns a 1 followed by 27 zeros: 1000000000000000000000000000
 HALF_RAY;
@@ -341,7 +341,7 @@ _Most commonly used as Aave's `HALF_PERCENTAGE_FACTOR`_
 
 ```typescript
 // only if you want to avoid BigInt prototype pollution
-import { HALF_PERCENT } from "ethers-maths/lib/constants";
+import { HALF_PERCENT } from "evm-maths/lib/constants";
 
 // Returns a 1 followed by 4 zeros: 10000
 HALF_PERCENT;
@@ -836,16 +836,16 @@ Scales the percent-based BigInt up or down to the given scale defined by its num
 BigInt.RAY.percentToDecimals(27); // 1 RAY
 ```
 
-[build-img]: https://github.com/Rubilmax/ethers-maths/actions/workflows/release.yml/badge.svg
-[build-url]: https://github.com/Rubilmax/ethers-maths/actions/workflows/release.yml
-[test-img]: https://github.com/Rubilmax/ethers-maths/actions/workflows/test.yml/badge.svg
-[test-url]: https://github.com/Rubilmax/ethers-maths/actions/workflows/test.yml
-[downloads-img]: https://img.shields.io/npm/dt/ethers-maths
-[downloads-url]: https://www.npmtrends.com/ethers-maths
-[npm-img]: https://img.shields.io/npm/v/ethers-maths
-[npm-url]: https://www.npmjs.com/package/ethers-maths
-[issues-img]: https://img.shields.io/github/issues/Rubilmax/ethers-maths
-[issues-url]: https://github.com/Rubilmax/ethers-maths/issues
+[build-img]: https://github.com/Rubilmax/evm-maths/actions/workflows/release.yml/badge.svg
+[build-url]: https://github.com/Rubilmax/evm-maths/actions/workflows/release.yml
+[test-img]: https://github.com/Rubilmax/evm-maths/actions/workflows/test.yml/badge.svg
+[test-url]: https://github.com/Rubilmax/evm-maths/actions/workflows/test.yml
+[downloads-img]: https://img.shields.io/npm/dt/evm-maths
+[downloads-url]: https://www.npmtrends.com/evm-maths
+[npm-img]: https://img.shields.io/npm/v/evm-maths
+[npm-url]: https://www.npmjs.com/package/evm-maths
+[issues-img]: https://img.shields.io/github/issues/Rubilmax/evm-maths
+[issues-url]: https://github.com/Rubilmax/evm-maths/issues
 [semantic-release-img]: https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg
 [semantic-release-url]: https://github.com/semantic-release/semantic-release
 [commitizen-img]: https://img.shields.io/badge/commitizen-friendly-brightgreen.svg

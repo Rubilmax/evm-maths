@@ -1,5 +1,3 @@
-import { toBigInt } from "ethers";
-
 import "../src";
 
 const ZERO = "0";
@@ -8,28 +6,28 @@ const RAY = BigInt.RAY.toString();
 
 const TWO_WAD = (BigInt.WAD * 2n).toString();
 
-describe("ethers-maths", () => {
+describe("evm-maths", () => {
   it("should be approximately equal", async () => {
-    expect(toBigInt(0).approxEqAbs(1, 0)).toBeFalsy();
-    expect(toBigInt(0).approxEqAbs(1, 1)).toBeTruthy();
+    expect(0n.approxEqAbs(1n, 0n)).toBeFalsy();
+    expect(0n.approxEqAbs(1n, 1n)).toBeTruthy();
   });
   it("should return the absolute value", async () => {
-    expect(toBigInt(1).abs()).toEqual(1n);
-    expect(toBigInt(-1).abs()).toEqual(1n);
+    expect(1n.abs()).toEqual(1n);
+    expect((-1n).abs()).toEqual(1n);
   });
 
   it("should return minimum", async () => {
-    expect(BigInt.WAD.min(0).toString()).toEqual(ZERO);
+    expect(BigInt.WAD.min(0n).toString()).toEqual(ZERO);
     expect(BigInt.WAD.min(BigInt.RAY).toString()).toEqual(WAD);
-    expect(BigInt.WAD.min(BigInt.WAD + 1n, 0, BigInt.RAY).toString()).toEqual("0");
-    expect(BigInt.min(BigInt.WAD + 1n, 0, BigInt.RAY).toString()).toEqual("0");
+    expect(BigInt.WAD.min(BigInt.WAD + 1n, 0n, BigInt.RAY).toString()).toEqual("0");
+    expect(BigInt.min(BigInt.WAD + 1n, 0n, BigInt.RAY).toString()).toEqual("0");
   });
 
   it("should return maximum", async () => {
-    expect(BigInt.WAD.max(0).toString()).toEqual(WAD);
+    expect(BigInt.WAD.max(0n).toString()).toEqual(WAD);
     expect(BigInt.WAD.max(BigInt.RAY).toString()).toEqual(RAY);
-    expect(BigInt.WAD.max(BigInt.WAD + 1n, 0, BigInt.RAY).toString()).toEqual(RAY);
-    expect(BigInt.max(BigInt.WAD + 1n, 0, BigInt.RAY).toString()).toEqual(RAY);
+    expect(BigInt.WAD.max(BigInt.WAD + 1n, 0n, BigInt.RAY).toString()).toEqual(RAY);
+    expect(BigInt.max(BigInt.WAD + 1n, 0n, BigInt.RAY).toString()).toEqual(RAY);
   });
 
   it("should average", async () => {
@@ -59,37 +57,37 @@ describe("ethers-maths", () => {
 
   it("should round half up on multiplication", async () => {
     expect((BigInt.PERCENT - 1n).percentMul(BigInt.PERCENT - 1n).toString()).toEqual(
-      (BigInt.PERCENT - 2n).toString()
+      (BigInt.PERCENT - 2n).toString(),
     );
     expect((BigInt.WAD - 1n).wadMul(BigInt.WAD - 1n).toString()).toEqual(
-      (BigInt.WAD - 2n).toString()
+      (BigInt.WAD - 2n).toString(),
     );
     expect((BigInt.RAY - 1n).rayMul(BigInt.RAY - 1n).toString()).toEqual(
-      (BigInt.RAY - 2n).toString()
+      (BigInt.RAY - 2n).toString(),
     );
   });
 
   it("should round up on multiplication", async () => {
     expect((BigInt.PERCENT - 1n).percentMulUp(BigInt.PERCENT - 1n).toString()).toEqual(
-      (BigInt.PERCENT - 1n).toString()
+      (BigInt.PERCENT - 1n).toString(),
     );
     expect((BigInt.WAD - 1n).wadMulUp(BigInt.WAD - 1n).toString()).toEqual(
-      (BigInt.WAD - 1n).toString()
+      (BigInt.WAD - 1n).toString(),
     );
     expect((BigInt.RAY - 1n).rayMulUp(BigInt.RAY - 1n).toString()).toEqual(
-      (BigInt.RAY - 1n).toString()
+      (BigInt.RAY - 1n).toString(),
     );
   });
 
   it("should round down on multiplication", async () => {
-    expect((BigInt.PERCENT - 1n).percentMulDown(1).toString()).toEqual("0");
-    expect((BigInt.WAD - 1n).wadMulDown(1).toString()).toEqual("0");
-    expect((BigInt.RAY - 1n).rayMulDown(1).toString()).toEqual("0");
+    expect((BigInt.PERCENT - 1n).percentMulDown(1n).toString()).toEqual("0");
+    expect((BigInt.WAD - 1n).wadMulDown(1n).toString()).toEqual("0");
+    expect((BigInt.RAY - 1n).rayMulDown(1n).toString()).toEqual("0");
   });
 
   it("should round half up on division", async () => {
     expect(BigInt.PERCENT.percentDiv(BigInt.PERCENT - 1n).toString()).toEqual(
-      (BigInt.PERCENT + 1n).toString()
+      (BigInt.PERCENT + 1n).toString(),
     );
     expect(BigInt.WAD.wadDiv(BigInt.WAD - 1n).toString()).toEqual((BigInt.WAD + 1n).toString());
     expect(BigInt.RAY.rayDiv(BigInt.RAY - 1n).toString()).toEqual((BigInt.RAY + 1n).toString());
@@ -97,7 +95,7 @@ describe("ethers-maths", () => {
 
   it("should round up on division", async () => {
     expect(BigInt.PERCENT.percentDivUp(BigInt.PERCENT - 1n).toString()).toEqual(
-      (BigInt.PERCENT + 2n).toString()
+      (BigInt.PERCENT + 2n).toString(),
     );
     expect(BigInt.WAD.wadDivUp(BigInt.WAD - 1n).toString()).toEqual((BigInt.WAD + 2n).toString());
     expect(BigInt.RAY.rayDivUp(BigInt.RAY - 1n).toString()).toEqual((BigInt.RAY + 2n).toString());
@@ -105,7 +103,7 @@ describe("ethers-maths", () => {
 
   it("should round down on division", async () => {
     expect(BigInt.PERCENT.percentDivDown(BigInt.PERCENT - 1n).toString()).toEqual(
-      (BigInt.PERCENT + 1n).toString()
+      (BigInt.PERCENT + 1n).toString(),
     );
     expect(BigInt.WAD.wadDivDown(BigInt.WAD - 1n).toString()).toEqual((BigInt.WAD + 1n).toString());
     expect(BigInt.RAY.rayDivDown(BigInt.RAY - 1n).toString()).toEqual((BigInt.RAY + 1n).toString());
@@ -130,12 +128,12 @@ describe("ethers-maths", () => {
   });
 
   it("should raise to the power of n", async () => {
-    expect((BigInt.PERCENT + BigInt.PERCENT).percentPow(2).formatPercent(1)).toEqual("4.0");
-    expect((BigInt.PERCENT + BigInt.PERCENT).percentPow(3).formatPercent(1)).toEqual("8.0");
-    expect((BigInt.WAD + BigInt.WAD).wadPow(2).formatWad(1)).toEqual("4.0");
-    expect((BigInt.WAD + BigInt.WAD).wadPow(3).formatWad(1)).toEqual("8.0");
-    expect((BigInt.RAY + BigInt.RAY).rayPow(2).formatRay(1)).toEqual("4.0");
-    expect((BigInt.RAY + BigInt.RAY).rayPow(3).formatRay(1)).toEqual("8.0");
+    expect((BigInt.PERCENT + BigInt.PERCENT).percentPow(2n).formatPercent(1)).toEqual("4.0");
+    expect((BigInt.PERCENT + BigInt.PERCENT).percentPow(3n).formatPercent(1)).toEqual("8.0");
+    expect((BigInt.WAD + BigInt.WAD).wadPow(2n).formatWad(1)).toEqual("4.0");
+    expect((BigInt.WAD + BigInt.WAD).wadPow(3n).formatWad(1)).toEqual("8.0");
+    expect((BigInt.RAY + BigInt.RAY).rayPow(2n).formatRay(1)).toEqual("4.0");
+    expect((BigInt.RAY + BigInt.RAY).rayPow(3n).formatRay(1)).toEqual("8.0");
   });
 
   it("should scale decimals", async () => {
