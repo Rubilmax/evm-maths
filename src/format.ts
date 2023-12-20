@@ -1,8 +1,8 @@
 import { pow10 } from "./utils";
 
-export const format = (x: bigint, decimals: number = 18, digits?: number) => {
-  decimals = Math.floor(decimals);
-  digits = Math.floor(digits ?? decimals);
+export const format = (x: bigint, decimals: number | bigint = 18, digits?: number | bigint) => {
+  decimals = Math.floor(Number(decimals));
+  digits = Math.floor(Number(digits ?? decimals));
 
   if (decimals === 0) return x.toString();
 
@@ -23,16 +23,20 @@ export const format = (x: bigint, decimals: number = 18, digits?: number) => {
   return full;
 };
 
-export const toFloat = (x: bigint, decimals?: number) => {
+export const toFloat = (x: bigint, decimals?: number | bigint) => {
   return parseFloat(format(x, decimals));
 };
 
-export const toDecimals = (x: bigint, decimals: number, scaleDecimals: number) => {
+export const toDecimals = (
+  x: bigint,
+  decimals: number | bigint,
+  scaleDecimals: number | bigint,
+) => {
   if (decimals <= scaleDecimals) {
-    const ratio = pow10(BigInt(Math.floor(scaleDecimals - decimals)));
+    const ratio = pow10(BigInt(Math.floor(Number(scaleDecimals) - Number(decimals))));
 
     return (x + ratio / 2n) / ratio;
   }
 
-  return x * pow10(BigInt(Math.floor(decimals - scaleDecimals)));
+  return x * pow10(BigInt(Math.floor(Number(decimals) - Number(scaleDecimals))));
 };

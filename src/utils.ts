@@ -1,7 +1,7 @@
 export type MulDiv = (x: bigint, y: bigint, scale: bigint) => bigint;
 
-export const pow10 = (power: bigint) => {
-  return 10n ** power;
+export const pow10 = (power: number | bigint) => {
+  return 10n ** BigInt(power);
 };
 
 export const approxEqAbs = (x: bigint, y: bigint, tolerance: bigint = 0n) => {
