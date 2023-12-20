@@ -80,8 +80,8 @@ declare global {
     min: (other: bigint, ...others: bigint[]) => bigint;
     max: (other: bigint, ...others: bigint[]) => bigint;
     sum: (others: bigint[]) => bigint;
-    format: (decimals?: number, digits?: number) => string;
-    toFloat: (decimals?: number) => number;
+    format: (decimals?: number | bigint, digits?: number | bigint) => string;
+    toFloat: (decimals?: number | bigint) => number;
 
     mulDiv: (other: bigint, scale: bigint) => bigint;
     mulDivUp: (other: bigint, scale: bigint) => bigint;
@@ -160,7 +160,7 @@ declare global {
     max: (other: bigint, ...others: bigint[]) => bigint;
     sum: (others: bigint[]) => bigint;
 
-    pow10: (power: bigint) => bigint;
+    pow10: (power: bigint | bigint) => bigint;
   }
 }
 
@@ -179,10 +179,10 @@ BigInt.prototype.max = function (y: bigint, ...others: bigint[]) {
 BigInt.prototype.sum = function (others: bigint[]) {
   return sum(this as bigint, others);
 };
-BigInt.prototype.format = function (decimals?: number, digits?: number) {
+BigInt.prototype.format = function (decimals?: number | bigint, digits?: number | bigint) {
   return format(this as bigint, decimals, digits);
 };
-BigInt.prototype.toFloat = function (decimals?: number) {
+BigInt.prototype.toFloat = function (decimals?: number | bigint) {
   return toFloat(this as bigint, decimals);
 };
 
