@@ -160,7 +160,7 @@ declare global {
     max: (other: bigint, ...others: bigint[]) => bigint;
     sum: (others: bigint[]) => bigint;
 
-    pow10: (power: bigint | bigint) => bigint;
+    pow10: (power: number | bigint) => bigint;
   }
 }
 
