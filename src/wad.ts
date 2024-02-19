@@ -55,7 +55,15 @@ export const wadExpN = (x: bigint, N: bigint) => {
 };
 
 export const wadSqrt = (x: bigint) => {
-  return sqrt(x, WAD);
+  return sqrt(x, WAD, mulDivHalfUp);
+};
+
+export const wadSqrtUp = (x: bigint) => {
+  return sqrt(x, WAD, mulDivUp);
+};
+
+export const wadSqrtDown = (x: bigint) => {
+  return sqrt(x, WAD, mulDivDown);
 };
 
 export const wadToDecimals = (x: bigint, decimals: number) => {

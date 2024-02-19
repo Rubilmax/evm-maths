@@ -53,12 +53,7 @@ export const mulDivUp: MulDiv = (x, y, scale) => {
 export const avgHalfUp = (x: bigint, y: bigint, pct: bigint, scale: bigint) =>
   (max(0n, scale - pct) * x + min(scale, pct) * y + scale / 2n) / scale;
 
-export const pow = (
-  x: bigint,
-  exponent: bigint,
-  scale: bigint,
-  mulDiv: MulDiv = mulDivHalfUp,
-): bigint => {
+export const pow = (x: bigint, exponent: bigint, scale: bigint, mulDiv: MulDiv): bigint => {
   if (exponent === 0n) return scale;
   if (exponent === 1n) return x;
 
@@ -68,7 +63,7 @@ export const pow = (
   return mulDiv(x, pow(xSquared, (exponent - 1n) / 2n, scale, mulDiv), scale);
 };
 
-export const sqrt = (x: bigint, scale = 1n, mulDiv: MulDiv = mulDivHalfUp) => {
+export const sqrt = (x: bigint, scale: bigint, mulDiv: MulDiv) => {
   if (x === 0n) return 0n;
 
   const scale2 = 2n * scale;
@@ -84,7 +79,7 @@ export const sqrt = (x: bigint, scale = 1n, mulDiv: MulDiv = mulDivHalfUp) => {
   return x0;
 };
 
-export const expN = (x: bigint, N: bigint, scale: bigint, mulDiv: MulDiv = mulDivDown) => {
+export const expN = (x: bigint, N: bigint, scale: bigint, mulDiv = mulDivDown) => {
   let res = scale;
   let monomial = scale;
   for (let k = 1n; k <= N; k++) {

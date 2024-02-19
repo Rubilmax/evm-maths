@@ -33,6 +33,8 @@ import {
   toPercentFloat,
   formatPercent,
   percentSqrt,
+  percentSqrtUp,
+  percentSqrtDown,
 } from "./percent";
 import {
   wadAdd,
@@ -54,6 +56,8 @@ import {
   toWadFloat,
   formatWad,
   wadSqrt,
+  wadSqrtUp,
+  wadSqrtDown,
 } from "./wad";
 import {
   rayAdd,
@@ -75,6 +79,8 @@ import {
   toRayFloat,
   formatRay,
   raySqrt,
+  raySqrtUp,
+  raySqrtDown,
 } from "./ray";
 
 declare global {
@@ -92,6 +98,8 @@ declare global {
     mulDivDown: (other: bigint, scale: bigint) => bigint;
 
     sqrt: () => bigint;
+    sqrtUp: () => bigint;
+    sqrtDown: () => bigint;
 
     compMul: (other: bigint) => bigint;
     compDiv: (other: bigint) => bigint;
@@ -110,6 +118,8 @@ declare global {
     percentPowDown: (exponent: bigint) => bigint;
     percentExpN: (exponent: bigint) => bigint;
     percentSqrt: () => bigint;
+    percentSqrtUp: () => bigint;
+    percentSqrtDown: () => bigint;
     percentToDecimals: (decimals: number) => bigint;
     percentToWad: () => bigint;
     percentToRay: () => bigint;
@@ -130,6 +140,8 @@ declare global {
     wadPowDown: (exponent: bigint) => bigint;
     wadExpN: (exponent: bigint) => bigint;
     wadSqrt: () => bigint;
+    wadSqrtUp: () => bigint;
+    wadSqrtDown: () => bigint;
     wadToDecimals: (decimals: number) => bigint;
     wadToPercent: () => bigint;
     wadToRay: () => bigint;
@@ -150,6 +162,8 @@ declare global {
     rayPowDown: (exponent: bigint) => bigint;
     rayExpN: (exponent: bigint) => bigint;
     raySqrt: () => bigint;
+    raySqrtUp: () => bigint;
+    raySqrtDown: () => bigint;
     rayToDecimals: (decimals: number) => bigint;
     rayToPercent: () => bigint;
     rayToWad: () => bigint;
@@ -205,8 +219,14 @@ BigInt.prototype.mulDivDown = function (other: bigint, scale: bigint) {
   return mulDivDown(this as bigint, other, scale);
 };
 
-BigInt.prototype.sqrt = function () {
-  return sqrt(this as bigint);
+BigInt.prototype.sqrt = function (scale = 1n) {
+  return sqrt(this as bigint, scale, mulDivHalfUp);
+};
+BigInt.prototype.sqrtUp = function (scale = 1n) {
+  return sqrt(this as bigint, scale, mulDivUp);
+};
+BigInt.prototype.sqrtDown = function (scale = 1n) {
+  return sqrt(this as bigint, scale, mulDivDown);
 };
 
 BigInt.prototype.compMul = function (other: bigint) {
@@ -257,6 +277,12 @@ BigInt.prototype.percentExpN = function (N: bigint) {
 };
 BigInt.prototype.percentSqrt = function () {
   return percentSqrt(this as bigint);
+};
+BigInt.prototype.percentSqrtUp = function () {
+  return percentSqrtUp(this as bigint);
+};
+BigInt.prototype.percentSqrtDown = function () {
+  return percentSqrtDown(this as bigint);
 };
 BigInt.prototype.percentToDecimals = function (decimals: number) {
   return percentToDecimals(this as bigint, decimals);
@@ -316,6 +342,12 @@ BigInt.prototype.wadExpN = function (N: bigint) {
 BigInt.prototype.wadSqrt = function () {
   return wadSqrt(this as bigint);
 };
+BigInt.prototype.wadSqrtUp = function () {
+  return wadSqrtUp(this as bigint);
+};
+BigInt.prototype.wadSqrtDown = function () {
+  return wadSqrtDown(this as bigint);
+};
 BigInt.prototype.wadToDecimals = function (decimals: number) {
   return wadToDecimals(this as bigint, decimals);
 };
@@ -373,6 +405,12 @@ BigInt.prototype.rayExpN = function (N: bigint) {
 };
 BigInt.prototype.raySqrt = function () {
   return raySqrt(this as bigint);
+};
+BigInt.prototype.raySqrtUp = function () {
+  return raySqrtUp(this as bigint);
+};
+BigInt.prototype.raySqrtDown = function () {
+  return raySqrtDown(this as bigint);
 };
 BigInt.prototype.rayToDecimals = function (decimals: number) {
   return rayToDecimals(this as bigint, decimals);

@@ -55,7 +55,15 @@ export const percentExpN = (x: bigint, N: bigint) => {
 };
 
 export const percentSqrt = (x: bigint) => {
-  return sqrt(x, PERCENT);
+  return sqrt(x, PERCENT, mulDivHalfUp);
+};
+
+export const percentSqrtUp = (x: bigint) => {
+  return sqrt(x, PERCENT, mulDivUp);
+};
+
+export const percentSqrtDown = (x: bigint) => {
+  return sqrt(x, PERCENT, mulDivDown);
 };
 
 export const percentToDecimals = (x: bigint, decimals: number) => {

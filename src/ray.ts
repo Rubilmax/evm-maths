@@ -55,7 +55,15 @@ export const rayExpN = (x: bigint, N: bigint) => {
 };
 
 export const raySqrt = (x: bigint) => {
-  return sqrt(x, RAY);
+  return sqrt(x, RAY, mulDivHalfUp);
+};
+
+export const raySqrtUp = (x: bigint) => {
+  return sqrt(x, RAY, mulDivUp);
+};
+
+export const raySqrtDown = (x: bigint) => {
+  return sqrt(x, RAY, mulDivDown);
 };
 
 export const rayToDecimals = (x: bigint, decimals: number) => {
