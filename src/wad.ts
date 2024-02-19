@@ -1,5 +1,5 @@
 import { WAD } from "./constants";
-import { avgHalfUp, expN, mulDivDown, mulDivHalfUp, mulDivUp, pow } from "./utils";
+import { avgHalfUp, expN, mulDivDown, mulDivHalfUp, mulDivUp, pow, sqrt } from "./utils";
 import { format, toDecimals, toFloat } from "./format";
 
 export const wadAdd = (x: bigint, wad: bigint) => {
@@ -52,6 +52,10 @@ export const wadPowDown = (x: bigint, exponent: bigint) => {
 
 export const wadExpN = (x: bigint, N: bigint) => {
   return expN(x, N, WAD, mulDivDown);
+};
+
+export const wadSqrt = (x: bigint) => {
+  return sqrt(x, WAD);
 };
 
 export const wadToDecimals = (x: bigint, decimals: number) => {

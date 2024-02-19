@@ -148,4 +148,15 @@ describe("evm-maths", () => {
   it("should format with 0 digit", async () => {
     expect(BigInt.WAD.formatWad(0)).toEqual("1");
   });
+
+  it("should calculate sqrt", async () => {
+    expect(4n.sqrt().toString()).toEqual("2");
+    expect(5n.sqrt().toString()).toEqual("2");
+    expect((BigInt.PERCENT * 4n).percentSqrt().formatPercent()).toEqual("2.0000");
+    expect((BigInt.PERCENT * 5n).percentSqrt().formatPercent()).toEqual("2.2361");
+    expect((BigInt.WAD * 4n).wadSqrt().formatWad()).toEqual("2.000000000000000000");
+    expect((BigInt.WAD * 5n).wadSqrt().formatWad()).toEqual("2.236067977499789696");
+    expect((BigInt.RAY * 4n).raySqrt().formatRay()).toEqual("2.000000000000000000000000000");
+    expect((BigInt.RAY * 5n).raySqrt().formatRay()).toEqual("2.236067977499789696409173669");
+  });
 });

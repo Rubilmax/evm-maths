@@ -68,6 +68,22 @@ export const pow = (
   return mulDiv(x, pow(xSquared, (exponent - 1n) / 2n, scale, mulDiv), scale);
 };
 
+export const sqrt = (x: bigint, scale = 1n, mulDiv: MulDiv = mulDivHalfUp) => {
+  if (x === 0n) return 0n;
+
+  const scale2 = 2n * scale;
+
+  let x0 = mulDiv(x, scale, scale2);
+  let x1 = mulDiv(x0 + mulDivDown(x, scale, x0), scale, scale2);
+
+  while (x1 < x0) {
+    x0 = x1;
+    x1 = mulDiv(x0 + mulDivDown(x, scale, x0), scale, scale2);
+  }
+
+  return x0;
+};
+
 export const expN = (x: bigint, N: bigint, scale: bigint, mulDiv: MulDiv = mulDivDown) => {
   let res = scale;
   let monomial = scale;

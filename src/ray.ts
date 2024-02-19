@@ -1,5 +1,5 @@
 import { RAY } from "./constants";
-import { avgHalfUp, expN, mulDivDown, mulDivHalfUp, mulDivUp, pow } from "./utils";
+import { avgHalfUp, expN, mulDivDown, mulDivHalfUp, mulDivUp, pow, sqrt } from "./utils";
 import { format, toDecimals, toFloat } from "./format";
 
 export const rayAdd = (x: bigint, ray: bigint) => {
@@ -52,6 +52,10 @@ export const rayPowDown = (x: bigint, exponent: bigint) => {
 
 export const rayExpN = (x: bigint, N: bigint) => {
   return expN(x, N, RAY, mulDivDown);
+};
+
+export const raySqrt = (x: bigint) => {
+  return sqrt(x, RAY);
 };
 
 export const rayToDecimals = (x: bigint, decimals: number) => {
