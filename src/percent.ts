@@ -1,5 +1,5 @@
 import { PERCENT } from "./constants";
-import { avgHalfUp, expN, mulDivDown, mulDivHalfUp, mulDivUp, pow, sqrt } from "./utils";
+import { avgHalfUp, expTaylorN, mulDivDown, mulDivHalfUp, mulDivUp, pow, sqrt } from "./utils";
 import { format, toDecimals, toFloat } from "./format";
 
 export const percentAdd = (x: bigint, percent: bigint) => {
@@ -50,8 +50,8 @@ export const percentPowDown = (x: bigint, exponent: bigint) => {
   return pow(x, exponent, PERCENT, mulDivDown);
 };
 
-export const percentExpN = (x: bigint, N: bigint) => {
-  return expN(x, N, PERCENT, mulDivDown);
+export const percentExpTaylorN = (x: bigint, N: bigint) => {
+  return expTaylorN(x, N, PERCENT, mulDivDown);
 };
 
 export const percentSqrt = (x: bigint) => {

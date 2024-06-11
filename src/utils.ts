@@ -79,7 +79,7 @@ export const sqrt = (x: bigint, scale: bigint, mulDiv: MulDiv) => {
   return x0;
 };
 
-export const expN = (x: bigint, N: bigint, scale: bigint, mulDiv = mulDivDown) => {
+export const expTaylorN = (x: bigint, N: bigint, scale: bigint, mulDiv = mulDivDown) => {
   let res = scale;
   let monomial = scale;
   for (let k = 1n; k <= N; k++) {
