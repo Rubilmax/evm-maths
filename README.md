@@ -406,7 +406,7 @@ Returns the integer power of a BigInt, calculated using wad-based multiplication
 ```typescript
 BigInt.WAD *
   2n // 2 WAD
-    .wadPow(2); // 2.0 ** 2 = 4.0 (in wad)
+    .wadPow(2n); // 2.0 ** 2 = 4.0 (in wad)
 ```
 
 #### `wadPowUp`
@@ -416,7 +416,7 @@ Returns the integer power of a BigInt, calculated using wad-based multiplication
 ```typescript
 BigInt.PERCENT *
   2n // 200% in wad
-    .wadPowUp(2); // 2.0 ** 2 = 4.0 (in wad)
+    .wadPowUp(2n); // 2.0 ** 2 = 4.0 (in wad)
 ```
 
 #### `wadPowDown`
@@ -426,7 +426,7 @@ Returns the integer power of a BigInt, calculated using wad-based multiplication
 ```typescript
 BigInt.PERCENT *
   2n // 200% in wad
-    .wadPowDown(2); // 2.0 ** 2 = 4.0 (in wad)
+    .wadPowDown(2n); // 2.0 ** 2 = 4.0 (in wad)
 ```
 
 #### `wadExpTaylorN`
@@ -434,7 +434,7 @@ BigInt.PERCENT *
 Returns the N-th order Taylor polynomial approximation of the integer exp of a BigInt, calculated using wad-based multiplications (18 decimals precision), rounded down
 
 ```typescript
-BigInt.PERCENT.wadExpTaylorN(3); // ~exp(1.0) ~= exp (in wad), using third-order Taylor polynomial
+BigInt.PERCENT.wadExpTaylorN(3n); // ~exp(1.0) ~= exp (in wad), using third-order Taylor polynomial
 ```
 
 #### `wadMulUp`
@@ -568,7 +568,7 @@ Returns the integer power of a BigInt, calculated using ray-based multiplication
 
 ```typescript
 (BigInt.RAY * 2n) // 2 RAY
-  .rayPow(2); // 2.0 ** 2 = 4.0 (in ray)
+  .rayPow(2n); // 2.0 ** 2 = 4.0 (in ray)
 ```
 
 #### `rayPowUp`
@@ -578,7 +578,7 @@ Returns the integer power of a BigInt, calculated using ray-based multiplication
 ```typescript
 BigInt.PERCENT *
   2n // 200% in ray
-    .rayPowUp(2); // 2.0 ** 2 = 4.0 (in ray)
+    .rayPowUp(2n); // 2.0 ** 2 = 4.0 (in ray)
 ```
 
 #### `rayPowDown`
@@ -588,7 +588,7 @@ Returns the integer power of a BigInt, calculated using ray-based multiplication
 ```typescript
 BigInt.PERCENT *
   2n // 200% in ray
-    .rayPowDown(2); // 2.0 ** 2 = 4.0 (in ray)
+    .rayPowDown(2n); // 2.0 ** 2 = 4.0 (in ray)
 ```
 
 #### `rayExpTaylorN`
@@ -596,7 +596,7 @@ BigInt.PERCENT *
 Returns the N-th order Taylor polynomial approximation of the integer exp of a BigInt, calculated using ray-based multiplications (27 decimals precision), rounded down
 
 ```typescript
-BigInt.PERCENT.rayExpTaylorN(3); // ~exp(1.0) ~= exp (in ray), using third-order Taylor polynomial
+BigInt.PERCENT.rayExpTaylorN(3n); // ~exp(1.0) ~= exp (in ray), using third-order Taylor polynomial
 ```
 
 #### `rayMulUp`
@@ -731,7 +731,7 @@ Returns the integer power of a BigInt, calculated using percent-based multiplica
 ```typescript
 BigInt.PERCENT *
   2n // 200% in percent
-    .percentPow(2); // 2.0 ** 2 = 4.0 (in percent)
+    .percentPow(2n); // 2.0 ** 2 = 4.0 (in percent)
 ```
 
 #### `percentPowUp`
@@ -741,7 +741,7 @@ Returns the integer power of a BigInt, calculated using percent-based multiplica
 ```typescript
 BigInt.PERCENT *
   2n // 200% in percent
-    .percentPowUp(2); // 2.0 ** 2 = 4.0 (in percent)
+    .percentPowUp(2n); // 2.0 ** 2 = 4.0 (in percent)
 ```
 
 #### `percentPowDown`
@@ -751,7 +751,7 @@ Returns the integer power of a BigInt, calculated using percent-based multiplica
 ```typescript
 BigInt.PERCENT *
   2n // 200% in percent
-    .percentPowDown(2); // 2.0 ** 2 = 4.0 (in percent)
+    .percentPowDown(2n); // 2.0 ** 2 = 4.0 (in percent)
 ```
 
 #### `percentExpTaylorN`
@@ -759,7 +759,7 @@ BigInt.PERCENT *
 Returns the N-th order Taylor polynomial approximation of the integer exp of a BigInt, calculated using percent-based multiplications (4 decimals precision), rounded down
 
 ```typescript
-BigInt.PERCENT.percentExpTaylorN(3); // ~exp(1.0) ~= exp (in percent), using third-order Taylor polynomial
+BigInt.PERCENT.percentExpTaylorN(3n); // ~exp(1.0) ~= exp (in percent), using third-order Taylor polynomial
 ```
 
 #### `percentMulUp`
